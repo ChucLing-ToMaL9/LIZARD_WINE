@@ -43,7 +43,7 @@ fun Admin_ManHinhChinh(navHostController: NavHostController, viewModel: HoaDonVi
                     Text(
                         modifier = Modifier.padding(top = 20.dp, end = 10.dp).fillMaxWidth(),
                         textAlign = TextAlign.Center,
-                        text = "Quản lí đơn hàng",
+                        text = "Quản lí đơn hàng Lizard",
                         color = Color.White,
                         style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Bold)
                     )
