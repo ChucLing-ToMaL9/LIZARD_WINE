@@ -11,8 +11,11 @@ import com.example.lizardswine.View.DS_DaDuyet
 import com.example.lizardswine.View.DS_DaGiao
 import com.example.lizardswine.View.DS_DaHuy
 import com.example.lizardswine.View.DS_DangGiao
+import com.example.lizardswine.View.DangKy
+import com.example.lizardswine.View.DangNhap
+import com.example.lizardswine.View.TrangChu
+import com.example.lizardswine.View.WelcomeToLizardWine
 import com.example.lizardswine.ViewModel.HoaDonViewModel
-import com.example.lizardswine.ViewModel.LoaiRuouViewModel
 
 //Navigation Admin Screen
 sealed class NavItem(val route: String) {
@@ -24,9 +27,37 @@ sealed class NavItem(val route: String) {
     data object AdminChiTietDonHang : NavItem("admin_xem_chi_tiet_don_hang")
 }
 
+//Navigation User Screen
+sealed class Screen(val route: String){
+    data object WelcomeToLizard: Screen("welcome_to_lizard")
+    data object DangNhap: Screen("user_dang_nhap")
+    data object DangKy: Screen("user_dang_ky")
+    data object UserTrangChu: Screen("user_trang_chu")
+}
 
 @Composable
-fun NavGraph(navHostController: NavHostController, viewModel: HoaDonViewModel) {
+fun UserNavGraph(navHostController: NavHostController){
+    NavHost(
+        navController = navHostController,
+        startDestination = Screen.WelcomeToLizard.route
+    ) {
+        composable(Screen.WelcomeToLizard.route){
+            WelcomeToLizardWine(navHostController)
+        }
+        composable(Screen.DangKy.route){
+            DangKy(navHostController)
+        }
+        composable(Screen.DangNhap.route){
+            DangNhap(navHostController)
+        }
+        composable(Screen.UserTrangChu.route){
+            TrangChu(navHostController)
+        }
+    }
+}
+
+@Composable
+fun AdminNavGraph(navHostController: NavHostController, viewModel: HoaDonViewModel) {
     NavHost(
         navController = navHostController,
         startDestination = NavItem.AdminManHinhChinh.route

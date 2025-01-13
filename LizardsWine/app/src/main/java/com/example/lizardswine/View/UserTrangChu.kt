@@ -1,16 +1,20 @@
 package com.example.lizardswine.View
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -22,6 +26,7 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -38,6 +43,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,17 +51,27 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.example.lizardswine.Api.RuouApi
+import com.example.lizardswine.Model.Ruou
 import com.example.lizardswine.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.text.DecimalFormat
 
 @Composable
 fun DropMenu() {
@@ -103,8 +119,7 @@ fun DropdownMenuItemWithSubMenu(menuItem: MenuItem) {
                 )
             }
         }
-        AnimatedVisibility(visible = isExpanded) {
-            Column(modifier = Modifier.padding(start = 16.dp)) {
+        AnimatedVisibility(visible = isExpanded) {Column(modifier = Modifier.padding(start = 16.dp)) {
             menuItem.subMenu.forEach { subItem ->
                 Text(
                     text = subItem,
@@ -112,7 +127,7 @@ fun DropdownMenuItemWithSubMenu(menuItem: MenuItem) {
                     color = Color.Black,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { /* Handle sub-menu item click */ }
+                        .clickable {  }
                         .padding(8.dp)
                 )
             }
@@ -127,12 +142,43 @@ data class MenuItem(
 )
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
-fun WineAppScreen() {
-    val navdrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+fun TrangChu(navHostController: NavHostController) {
+    val api = remember {
+        Retrofit.Builder()
+            .baseUrl("https://93be-113-172-123-201.ngrok-free.app/lizardwine_api/api/Ruou/") // Địa chỉ IP local server
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(RuouApi::class.java)
+    }
+
+    var ruouList by remember { mutableStateOf<List<Ruou>>(emptyList()) }
+    var isLoading by remember { mutableStateOf(true) }
     val scope = rememberCoroutineScope()
+
+    // Gọi API để lấy danh sách rượu
+    LaunchedEffect(Unit) {
+        scope.launch {
+            try {
+                val response = api.getRuouList(maR = 1)
+                ruouList = response.ds_ruou
+                Log.d("WineApp", "Dữ liệu nhận được: ${ruouList}")
+            } catch (e: Exception) {
+                ruouList = emptyList()
+                Log.e("WineApp", "Lỗi khi gọi API", e)
+            } finally {
+                isLoading = false
+            }
+        }
+    }
+
+    val navdrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val configuration = LocalConfiguration.current;
+    val screenWidth = configuration.screenWidthDp.dp//Tính kích thước màn hình
+
     ModalNavigationDrawer(
+        modifier = Modifier.navigationBarsPadding(),
         drawerState = navdrawerState,
         drawerContent = {
             ModalDrawerSheet(
@@ -153,45 +199,81 @@ fun WineAppScreen() {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    navigationIcon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.hamburger),
-                            contentDescription = "Menu",
-                            tint = Color.White,
-                            modifier = Modifier
-                                .size(32.dp)
-                                .clickable(onClick = {
-                                    scope.launch {
-                                        if (navdrawerState.isClosed) {
-                                            navdrawerState.open()
-                                        } else {
-                                            navdrawerState.close()
+                    title = {
+                        Row(modifier = Modifier.fillMaxWidth().padding(0.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween){
+                            Icon(
+                                painter = painterResource(id = R.drawable.hamburger),
+                                contentDescription = "Menu",
+                                tint = Color.White,
+                                modifier = Modifier
+                                    .size(32.dp)
+                                    .clickable(onClick = {
+                                        scope.launch {
+                                            if (navdrawerState.isClosed) {
+                                                navdrawerState.open()
+                                            } else {
+                                                navdrawerState.close()
+                                            }
+                                        }
+                                    })
+                            )
+                            var inputText by remember { mutableStateOf("") }
+                            var trangThai by remember { mutableStateOf(false) }
+                            val quanLiTrangThai = remember { FocusRequester() }
+
+                            BasicTextField(
+                                value = inputText,
+                                onValueChange = { inputText = it },
+                                modifier = Modifier
+                                    .width(screenWidth * 14 / 20)
+                                    .height(40.dp)
+                                    .background(Color.White, shape = RoundedCornerShape(24.dp))
+                                    .padding(horizontal = 12.dp)
+                                    .focusRequester(quanLiTrangThai)
+                                    .onFocusChanged { trangThai = it.isFocused },
+                                singleLine = true,
+                                decorationBox = { innerTextField ->
+                                    Row(
+                                        modifier = Modifier.fillMaxSize(),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.SpaceBetween // Đặt icon ở cuối
+                                    ) {
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                            if (!trangThai && inputText.isEmpty()) {
+                                                Text(
+                                                    text = "Nhập nội dung tìm kiếm...",
+                                                    color = Color.Gray,
+                                                    fontSize = 16.sp
+                                                )
+                                            }
+                                            innerTextField()
+                                        }
+                                        IconButton(
+                                            onClick = {},
+                                            modifier = Modifier.padding(start = 41.dp) // Lùi icon sát mép ngoài hơn
+                                        ) {
+                                            Icon(
+                                                painter = painterResource(id = R.drawable.search),
+                                                contentDescription = "Search",
+                                                tint = Color.Gray,
+                                                modifier = Modifier.size(20.dp)
+                                            )
                                         }
                                     }
-                                })
-                        )
+                                },
+                                textStyle = TextStyle(fontSize = 16.sp, color = Color.Black),
+                            )
+                            Icon(
+                                painter = painterResource(id = R.drawable.cart),
+                                contentDescription = "Cart",
+                                tint = Color.White,
+                                modifier = Modifier
+                                    .padding(end = 17.dp)
+                                    .size(32.dp)
+                                    .clickable(onClick = {})
+                            )
+                        }
 
-                    },
-                    title = {
-                        BasicTextField(
-                            value = "",
-                            onValueChange = {},
-                            modifier = Modifier.fillMaxWidth(1f)
-                                //.weight(1f)
-                                .background(Color.White, shape = RoundedCornerShape(20.dp))
-                                .padding(horizontal = 10.dp, vertical = 8.dp),
-                            singleLine = true,
-                            textStyle = TextStyle(fontSize = 16.sp, color = Color.Black),
-                        )
-                    },
-                    actions = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.cart),
-                            contentDescription = "Cart",
-                            tint = Color.White,
-                            modifier = Modifier.size(32.dp)
-                                .clickable(onClick = {})
-                        )
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color(0xFF004D40),
@@ -217,7 +299,6 @@ fun WineAppScreen() {
                         contentScale = ContentScale.Crop
                     )
                 }
-
                 item {
                     Row(
                         modifier = Modifier
@@ -242,105 +323,91 @@ fun WineAppScreen() {
                         }
                     }
                 }
-
-
-                items(6) { index ->
+                item{
+                    FlowRow(
+                        modifier = Modifier.padding() .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalArrangement = Arrangement.Center,
+                        maxItemsInEachRow = 2
+                    ){
+                        ruouList.forEach{
+                                ruou -> WineItem(ruou)
+                        }
+                    }
+                }
+                item {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 8.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                            .padding(vertical = 8.dp, horizontal = 16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        WineItem()
-                        WineItem()
+                        Text(
+                            text = "RƯỢU VANG",
+                            style = TextStyle(fontSize = 18.sp, color = Color.Black)
+                        )
+                        Button(
+                            onClick = {},
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+                            elevation = ButtonDefaults.elevation(
+                                defaultElevation = 0.dp,
+                                pressedElevation = 0.dp
+                            )
+                        ) {
+                            Text("Xem tất cả >>")
+                        }
                     }
                 }
-                // }
+                item{
+                    FlowRow(
+                        modifier = Modifier.padding() .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalArrangement = Arrangement.Center,
+                        maxItemsInEachRow = 2
+                    ){
+                        ruouList.forEach{
+                                ruou -> WineItem(ruou)
+                        }
+                    }
+                }
             }
         }
     }
 }
 
-
 @Composable
-fun SearchBar(scope: CoroutineScope, navdrawerState: DrawerState) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color(0xFF004D40))
-            .padding(15.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.hamburger),
-            contentDescription = "Menu",
-            tint = Color.White,
-            modifier = Modifier
-                .size(32.dp)
-                .clickable(onClick = {
-                    scope.launch {
-                        if (navdrawerState.isClosed) {
-                            navdrawerState.open()
-                        } else {
-                            navdrawerState.close()
-                        }
-                    }
-                })
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        BasicTextField(
-            value = "",
-            onValueChange = {},
-            modifier = Modifier
-                .weight(1f)
-                .background(Color.White, shape = RoundedCornerShape(20.dp))
-                .padding(horizontal = 10.dp, vertical = 8.dp),
-            singleLine = true,
-            textStyle = TextStyle(fontSize = 16.sp, color = Color.Black),
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        Icon(
-            painter = painterResource(id = R.drawable.cart),
-            contentDescription = "Cart",
-            tint = Color.White,
-            modifier = Modifier.size(32.dp)
-                .clickable(onClick = {})
-        )
-    }
-}
+fun WineItem(ruou: Ruou) {
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val formatter = DecimalFormat("#,###")
+    val formattedGiaBan = ruou.GiaBan?.let { formatter.format(it.toDouble()) } ?: "N/A"
 
-@Composable
-fun WineItem() {
     Column(
         modifier = Modifier
-            .width(190.dp)
             .padding(8.dp)
-            .background(Color(0xFFE8F5E9), shape = RoundedCornerShape(8.dp))
-            .padding(8.dp),
+            .background(Color(0xFFE8F5E9), shape = RoundedCornerShape(8.dp)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
             painter = painterResource(id = R.drawable.anhchairuou),
             contentDescription = "Wine Bottle",
             modifier = Modifier
-                .height(150.dp)
-                .fillMaxWidth()
-                .padding(bottom = 8.dp),
+                .size(screenWidth * 9 / 20)
+                .padding(15.dp),
             contentScale = ContentScale.Fit
         )
         Text(
-            text = "Vang Septima Obra Reserva Malbec",
+            text = ruou.TenRuou ?: "Không tên",
             fontSize = 14.sp,
             color = Color.Black,
             maxLines = 2,
             textAlign = TextAlign.Center
         )
-        Spacer(modifier = Modifier.height(6.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+
+        Row (verticalAlignment = Alignment.CenterVertically){
+            Spacer(modifier = Modifier.height(6.dp))
             Text(
-                text = "880.000 đ",
+                text = "$formattedGiaBan VND",
                 fontSize = 14.sp,
                 color = Color(0xFF004D40)
             )
@@ -357,15 +424,16 @@ fun WineItem() {
                 modifier = Modifier.size(16.dp)
             )
         }
+
     }
 }
-
 
 @Composable
 fun BottomNavigationBar() {
     BottomNavigation(
         backgroundColor = Color.White,
-        contentColor = Color(0xFF004D40)
+        contentColor = Color(0xFF004D40),
+        //modifier = Modifier.navigationBarsPadding()
     ) {
         BottomNavigationItem(
             icon = { Icon(painter = painterResource(id = R.drawable.home),

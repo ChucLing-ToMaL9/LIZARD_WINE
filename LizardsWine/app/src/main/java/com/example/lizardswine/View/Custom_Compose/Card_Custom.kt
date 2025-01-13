@@ -97,7 +97,7 @@ fun CardHoaDon(navHostController: NavHostController, hoadon: HoaDon, manhinh: In
                                 //viewModel.capNhatTrangThaiHoaDon(hoaDon = hoaDonRequest)
                                 viewModel.capNhatTrangThaiHoaDon(maHD = hoadon.MaHD, 1)
                             },
-                            colorText_Border = 0xFF009688,
+                            colorText_Border = 0xFF188158,
                             text = if(manhinh == 1) "Duyệt đơn hàng" else "Đã duyệt"
                         )
                     }
@@ -106,14 +106,14 @@ fun CardHoaDon(navHostController: NavHostController, hoadon: HoaDon, manhinh: In
                             onClickButton = {
                                 viewModel.capNhatTrangThaiHoaDon(maHD = hoadon.MaHD, 2)
                             },
-                            colorText_Border = 0xFF009688,
+                            colorText_Border = 0xFF188158,
                             text = "Đã giao hàng"
                         )
                     }
                     4 -> {
                         Text(
                             text = "Đơn hàng đã giao",
-                            color = Color(0xFF009688)
+                            color = Color(0xFF188158)
                         )
                     }
                     5 -> {
@@ -124,7 +124,7 @@ fun CardHoaDon(navHostController: NavHostController, hoadon: HoaDon, manhinh: In
                         )
                         Text(
                             text = "Hết hàng",
-                            color = Color(0xFF009688)
+                            color = Color(0xFF188158)
                         )
                     }
                 }

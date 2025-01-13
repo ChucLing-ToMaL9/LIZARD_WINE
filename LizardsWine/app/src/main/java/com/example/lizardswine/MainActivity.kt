@@ -7,13 +7,18 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.lizardswine.Navigation.NavGraph
+import com.example.lizardswine.Navigation.AdminNavGraph
+import com.example.lizardswine.Navigation.UserNavGraph
 import com.example.lizardswine.ViewModel.HoaDonViewModel
-import com.example.lizardswine.ViewModel.LoaiRuouViewModel
 import com.example.lizardswine.ui.theme.LizardsWineTheme
 
 class MainActivity : ComponentActivity() {
-    private val viewModel by viewModels<HoaDonViewModel>()
+    /* -- Admin
+        private val viewModel by viewModels<HoaDonViewModel>()
+        private lateinit var navHostController: NavHostController
+     */
+
+    //private val viewModel by viewModels<HoaDonViewModel>()
     private lateinit var navHostController: NavHostController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,8 +26,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LizardsWineTheme {
+                /* -- Admin
+                    navHostController = rememberNavController()
+                    AdminNavGraph(navHostController = navHostController, viewModel)
+                 */
+
                 navHostController = rememberNavController()
-                NavGraph(navHostController = navHostController, viewModel)
+                UserNavGraph(navHostController = navHostController)
             }
         }
     }
