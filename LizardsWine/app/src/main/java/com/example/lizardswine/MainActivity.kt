@@ -9,11 +9,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.lizardswine.Navigation.NavGraph
 import com.example.lizardswine.ViewModel.HoaDonViewModel
+import com.example.lizardswine.ViewModel.LoaiRuouViewModel
 import com.example.lizardswine.ui.theme.LizardsWineTheme
 
 class MainActivity : ComponentActivity() {
-    private lateinit var navHostController: NavHostController
     private val viewModel by viewModels<HoaDonViewModel>()
+    private lateinit var navHostController: NavHostController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

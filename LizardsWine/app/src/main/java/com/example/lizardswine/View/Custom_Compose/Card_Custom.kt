@@ -1,7 +1,5 @@
 package com.example.lizardswine.View.Custom_Compose
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,12 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
@@ -27,29 +20,32 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.lizardswine.Model.ChiTietHoaDon
 import com.example.lizardswine.Model.HoaDon
-import com.example.lizardswine.R
+import com.example.lizardswine.Navigation.NavItem
+import com.example.lizardswine.ViewModel.HoaDonViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CardHoaDon(hoadon: HoaDon, manhinh: Int, onClickCard: () -> Unit){
+fun CardHoaDon(navHostController: NavHostController, hoadon: HoaDon, manhinh: Int, onClickCard: () -> Unit, viewModel: HoaDonViewModel){
     //1 -> duyệt
     //2 -> đã duyệt
     //3 -> đang giao
     //4 -> đã giao
     //5 -> đã hủy
+    val updateResultState = viewModel.updateResult.collectAsState()
+
     Card(
         modifier = Modifier.fillMaxSize().padding(10.dp),
         shape = RoundedCornerShape(8.dp),
@@ -66,7 +62,7 @@ fun CardHoaDon(hoadon: HoaDon, manhinh: Int, onClickCard: () -> Unit){
 
             Text(
                 modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
-                text = "Tổng số tiền (" + hoadon.TongThanhToan.toString() + " sản phẩm): " + hoadon.TongThanhToan.toString() + " VNĐ",
+                text = "Tổng số tiền (" + hoadon.SoLuongRuou + " sản phẩm): " + hoadon.TongThanhToan.toString() + " VNĐ",
                 style = TextStyle(
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
@@ -89,20 +85,27 @@ fun CardHoaDon(hoadon: HoaDon, manhinh: Int, onClickCard: () -> Unit){
                     0 -> { }
                     1, 2 -> {
                         ButtonAccept_Cancel(
-                            onClickButton = {},
+                            onClickButton = {
+                                viewModel.capNhatTrangThaiHuyHoaDon(maHD = hoadon.MaHD, 1)
+                            },
                             colorText_Border = 0xFFFF5252,
                             text = "Hủy đơn hàng"
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         ButtonAccept_Cancel(
-                            onClickButton = {},
+                            onClickButton = {
+                                //viewModel.capNhatTrangThaiHoaDon(hoaDon = hoaDonRequest)
+                                viewModel.capNhatTrangThaiHoaDon(maHD = hoadon.MaHD, 1)
+                            },
                             colorText_Border = 0xFF009688,
                             text = if(manhinh == 1) "Duyệt đơn hàng" else "Đã duyệt"
                         )
                     }
                     3 -> {
                         ButtonAccept_Cancel(
-                            onClickButton = {},
+                            onClickButton = {
+                                viewModel.capNhatTrangThaiHoaDon(maHD = hoadon.MaHD, 2)
+                            },
                             colorText_Border = 0xFF009688,
                             text = "Đã giao hàng"
                         )
@@ -186,7 +189,9 @@ fun CardThongTinRuou(ruou: ChiTietHoaDon) {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CardDiaChi(hoadon: HoaDon, onClickDiaChi: () -> Unit){
+fun CardDiaChi(hoadon: Result<HoaDon>?, onClickDiaChi: () -> Unit){
+    val hoaDonData = hoadon?.getOrNull()
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         backgroundColor = Color(0xFFE8F5E9),
@@ -195,8 +200,8 @@ fun CardDiaChi(hoadon: HoaDon, onClickDiaChi: () -> Unit){
     ) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(text = "${hoadon.TenDangNhap} | ${hoadon.SoDT}", fontWeight = FontWeight.Bold, color = Color(0xFF0A2E1F))
-                Text(text = hoadon.DCGiaoHang)
+                Text(text = "${hoaDonData?.TenDangNhap} | ${hoaDonData?.SoDienThoai}", fontWeight = FontWeight.Bold, color = Color(0xFF0A2E1F))
+                Text(text = "${hoaDonData?.DCGiaoHang}")
             }
             Column(modifier = Modifier.padding(16.dp).padding(start = 10.dp)) {
                 Icon(
@@ -211,7 +216,9 @@ fun CardDiaChi(hoadon: HoaDon, onClickDiaChi: () -> Unit){
 }
 
 @Composable
-fun CardPTThanhToan(hoadon: HoaDon){
+fun CardPTThanhToan(hoadon: Result<HoaDon>?){
+    val hoaDonData = hoadon?.getOrNull()
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         backgroundColor = Color(0xFFE8F5E9),
@@ -224,14 +231,15 @@ fun CardPTThanhToan(hoadon: HoaDon){
         ) {
             Text(text = "Thanh toán", fontWeight = FontWeight.Bold, color = Color(0xFF0A2E1F))
 
-            Text(text = hoadon.LoaiThanhToan, fontWeight = FontWeight.Bold, color = Color(0xFF0A2E1F))
+            Text(text = "${hoaDonData?.LoaiThanhToan}", fontWeight = FontWeight.Bold, color = Color(0xFF0A2E1F))
 
         }
     }
 }
 
 @Composable
-fun CardChiTietThanhToan(hoadon: HoaDon){
+fun CardChiTietThanhToan(hoadon: Result<HoaDon>?){
+    val hoaDonData = hoadon?.getOrNull()
     Card(
         modifier = Modifier.fillMaxWidth(),
         backgroundColor = Color(0xFFE8F5E9),
@@ -243,7 +251,7 @@ fun CardChiTietThanhToan(hoadon: HoaDon){
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(text = "Tổng tiền hàng", color = Color(0xFF0A2E1F))
-                Text(text = "${hoadon.TongTien}", color = Color(0xFF0A2E1F))
+                Text(text = "${hoaDonData?.TongTien}", color = Color(0xFF0A2E1F))
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -257,7 +265,7 @@ fun CardChiTietThanhToan(hoadon: HoaDon){
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(text = "Giảm giá dành cho bạn", color = Color(0xFF0A2E1F))
-                Text(text = "-50.000đ", color = Color.Red)
+                Text(text = "${hoaDonData?.GiaTriKM} %", color = Color.Red)
             }
             Divider(modifier = Modifier.padding(vertical = 8.dp))
             Row(
@@ -265,7 +273,7 @@ fun CardChiTietThanhToan(hoadon: HoaDon){
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(text = "Tổng tiền sản phẩm", fontWeight = FontWeight.Bold, color = Color(0xFF0A2E1F))
-                Text(text = hoadon.TongThanhToan.toString(), fontWeight = FontWeight.Bold, color = Color(0xFF0A2E1F))
+                Text(text = hoaDonData?.TongThanhToan.toString(), fontWeight = FontWeight.Bold, color = Color(0xFF0A2E1F))
             }
         }
     }

@@ -1,21 +1,26 @@
 package com.example.lizardswine.Model
 
+import com.google.gson.annotations.SerializedName
+
 data class HoaDon (
     val MaHD: Int,
     val TenDangNhap: String,
-    val SoDT: String,
+    val SoDienThoai: String,
     val DCGiaoHang: String,
     val ChiTietHoaDon: List<ChiTietHoaDon>,
     val LoaiThanhToan: String,
-    val LoaiTrangThai: String,
+    val MaTrangThai: Int,
+    val LoaitrangThai: String,
     val LoaiKhuyenMai: String,
     val GiaTriKM: Int,
     val NgayLapHD: String,
     val TongTien: Int,
-    val TongThanhToan: Int
+    val TongThanhToan: Int,
+    val SoLuongRuou: String
 )
 
 data class ChiTietHoaDon(
+    val MaR: Int,
     val DS_AnhRuou: List<DS_AnhRuou>,
     val TenRuou: String,
     val SoLuoong: Int,// SoLuong: Int
@@ -24,5 +29,6 @@ data class ChiTietHoaDon(
 )
 
 data class DS_AnhRuou(
+    val MaHA: Int,
     val AnhRuou: String
 )

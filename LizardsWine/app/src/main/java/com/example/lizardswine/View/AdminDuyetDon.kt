@@ -1,19 +1,24 @@
 package com.example.lizardswine.View
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -22,9 +27,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.lizardswine.Model.ChiTietHoaDon
-import com.example.lizardswine.Model.DS_AnhRuou
-import com.example.lizardswine.Model.HoaDon
 import com.example.lizardswine.Navigation.NavItem
 import com.example.lizardswine.View.Custom_Compose.CardHoaDon
 import com.example.lizardswine.View.Custom_Compose.TabLayout
@@ -67,141 +69,57 @@ fun Admin_ManHinhChinh(navHostController: NavHostController, viewModel: HoaDonVi
 
 
 @Composable
-fun DS_ChoXacNhan(navHostController: NavHostController, viewModel: HoaDonViewModel) {
+fun DS_ChoXacNhan(navHostController: NavHostController, viewModel: HoaDonViewModel = remember { HoaDonViewModel() }) {
 
-    val hoadons = listOf<HoaDon>(
-        HoaDon(1, "user2", "0987654321", "789 Pham Hung Quan 3 Cau Giay Hanoi",
-            listOf<ChiTietHoaDon>(
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Vivo Cabernet Sauvignon", 2, 700000,1400000),
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Septima Obra Reserva Malbec", 1, 600000,1200000),
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Robert Mondavi Private Selection Cabernet Sauvignon", 1, 900000,1800000)
-            ), "Thanh toán khi nhận hàn", "Chờ giao hàng", "Giảm giá theo hóa đơn", 15, "2025-01-06", 200000, 180000
-        ),
-        HoaDon(1, "user2", "0987654321", "789 Pham Hung Quan 3 Cau Giay Hanoi",
-            listOf<ChiTietHoaDon>(
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Vivo Cabernet Sauvignon", 2, 700000,1400000),
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Septima Obra Reserva Malbec", 1, 600000,1200000),
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Robert Mondavi Private Selection Cabernet Sauvignon", 1, 900000,1800000)
-            ), "Thanh toán khi nhận hàn", "Chờ giao hàng", "Giảm giá theo hóa đơn", 15, "2025-01-06", 200000, 180000
-        ),
-        HoaDon(1, "user2", "0987654321", "789 Pham Hung Quan 3 Cau Giay Hanoi",
-            listOf<ChiTietHoaDon>(
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Vivo Cabernet Sauvignon", 2, 700000,1400000),
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Septima Obra Reserva Malbec", 1, 600000,1200000),
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Robert Mondavi Private Selection Cabernet Sauvignon", 1, 900000,1800000)
-            ), "Thanh toán khi nhận hàn", "Chờ giao hàng", "Giảm giá theo hóa đơn", 15, "2025-01-06", 200000, 180000
-        ),
-        HoaDon(1, "user2", "0987654321", "789 Pham Hung Quan 3 Cau Giay Hanoi",
-            listOf<ChiTietHoaDon>(
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Vivo Cabernet Sauvignon", 2, 700000,1400000),
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Septima Obra Reserva Malbec", 1, 600000,1200000),
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Robert Mondavi Private Selection Cabernet Sauvignon", 1, 900000,1800000)
-            ), "Thanh toán khi nhận hàn", "Chờ giao hàng", "Giảm giá theo hóa đơn", 15, "2025-01-06", 200000, 180000
-        ),
-        HoaDon(1, "user2", "0987654321", "789 Pham Hung Quan 3 Cau Giay Hanoi",
-            listOf<ChiTietHoaDon>(
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Vivo Cabernet Sauvignon", 2, 700000,1400000),
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Septima Obra Reserva Malbec", 1, 600000,1200000),
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Robert Mondavi Private Selection Cabernet Sauvignon", 1, 900000,1800000)
-            ), "Thanh toán khi nhận hàn", "Chờ giao hàng", "Giảm giá theo hóa đơn", 15, "2025-01-06", 200000, 180000
-        ),
-        HoaDon(1, "user2", "0987654321", "789 Pham Hung Quan 3 Cau Giay Hanoi",
-            listOf<ChiTietHoaDon>(
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Vivo Cabernet Sauvignon", 2, 700000,1400000),
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Septima Obra Reserva Malbec", 1, 600000,1200000),
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Robert Mondavi Private Selection Cabernet Sauvignon", 1, 900000,1800000)
-            ), "Thanh toán khi nhận hàn", "Chờ giao hàng", "Giảm giá theo hóa đơn", 15, "2025-01-06", 200000, 180000
-        ),
-        HoaDon(1, "user2", "0987654321", "789 Pham Hung Quan 3 Cau Giay Hanoi",
-            listOf<ChiTietHoaDon>(
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Vivo Cabernet Sauvignon", 2, 700000,1400000),
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Septima Obra Reserva Malbec", 1, 600000,1200000),
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Robert Mondavi Private Selection Cabernet Sauvignon", 1, 900000,1800000)
-            ), "Thanh toán khi nhận hàn", "Chờ giao hàng", "Giảm giá theo hóa đơn", 15, "2025-01-06", 200000, 180000
-        ),
-        HoaDon(1, "user2", "0987654321", "789 Pham Hung Quan 3 Cau Giay Hanoi",
-            listOf<ChiTietHoaDon>(
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Vivo Cabernet Sauvignon", 2, 700000,1400000),
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Septima Obra Reserva Malbec", 1, 600000,1200000),
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Robert Mondavi Private Selection Cabernet Sauvignon", 1, 900000,1800000)
-            ), "Thanh toán khi nhận hàn", "Chờ giao hàng", "Giảm giá theo hóa đơn", 15, "2025-01-06", 200000, 180000
-        ),
-        HoaDon(1, "user2", "0987654321", "789 Pham Hung Quan 3 Cau Giay Hanoi",
-            listOf<ChiTietHoaDon>(
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Vivo Cabernet Sauvignon", 2, 700000,1400000),
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Septima Obra Reserva Malbec", 1, 600000,1200000),
-                ChiTietHoaDon(listOf<DS_AnhRuou>(
-                    DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-                ), "Rượu Vang Robert Mondavi Private Selection Cabernet Sauvignon", 1, 900000,1800000)
-            ), "Thanh toán khi nhận hàn", "Chờ giao hàng", "Giảm giá theo hóa đơn", 15, "2025-01-06", 200000, 180000
-        )
-    )
-    viewModel.layDSHoaDonTheoTrangThai(1)
-    var ds_choxacnhan: List<HoaDon> = viewModel.dsHoaDonTheoTrangThai
-    LazyColumn (
-        modifier = Modifier.navigationBarsPadding()
-    ){
-        items(ds_choxacnhan){
-            CardHoaDon(
-                hoadon = it,
-                1,
-                onClickCard = {
-                    navHostController.navigate(NavItem.AdminChiTietDonHang.route)
+    val hoaDonList = viewModel.hoaDonList.collectAsState()
+    val isLoading = viewModel.isLoading.collectAsState()
+    val message = viewModel.message.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.layDSHoaDonTheoTrangThai(1)
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        when{
+            isLoading.value -> {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
+                    color = Color(0xFF0A2E1F)
+                )
+            }
+            hoaDonList.value.isNotEmpty() -> {
+                LazyColumn(
+                    modifier = Modifier.navigationBarsPadding()
+                ) {
+                    items(hoaDonList.value.size) { index ->
+                        val hoadon = hoaDonList.value[index]
+                        CardHoaDon(
+                            navHostController,
+                            hoadon = hoadon,
+                            1,
+                            onClickCard = {
+                                navHostController.navigate(NavItem.AdminChiTietDonHang.route + "?MaHD=${hoadon.MaHD}")
+                            },
+                            viewModel
+                        )
+
+                    }
                 }
-            )
+            }
+            message.value != null -> {
+                Text(
+                    text = (message.value + " Chờ xác nhận.") ?: " ",
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
+            else -> {
+                Text(
+                    text = "OMG! Api có vấn đề.",
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
         }
+
     }
 
 }

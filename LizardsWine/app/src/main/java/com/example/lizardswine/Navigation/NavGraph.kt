@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.lizardswine.View.Admin_ManHinhChinh
 import com.example.lizardswine.View.ChiTietDonHang
 import com.example.lizardswine.View.DS_DaDuyet
@@ -11,6 +12,7 @@ import com.example.lizardswine.View.DS_DaGiao
 import com.example.lizardswine.View.DS_DaHuy
 import com.example.lizardswine.View.DS_DangGiao
 import com.example.lizardswine.ViewModel.HoaDonViewModel
+import com.example.lizardswine.ViewModel.LoaiRuouViewModel
 
 //Navigation Admin Screen
 sealed class NavItem(val route: String) {
@@ -33,20 +35,26 @@ fun NavGraph(navHostController: NavHostController, viewModel: HoaDonViewModel) {
             Admin_ManHinhChinh(navHostController, viewModel)
         }
         composable(NavItem.AdminDaDuyet.route) {
-            DS_DaDuyet(navHostController)
+            DS_DaDuyet(navHostController, viewModel)
         }
         composable(NavItem.AdminDangGiao.route) {
-            DS_DangGiao(navHostController)
+            DS_DangGiao(navHostController, viewModel)
         }
         composable(NavItem.AdminDaGiao.route) {
-            DS_DaGiao(navHostController)
+            DS_DaGiao(navHostController, viewModel)
         }
         composable(NavItem.AdminHuyDon.route) {
-            DS_DaHuy(navHostController)
+            DS_DaHuy(navHostController, viewModel)
         }
 
-        composable(NavItem.AdminChiTietDonHang.route) {
-            ChiTietDonHang(navHostController)
+        composable(
+            NavItem.AdminChiTietDonHang.route + "?MaHD={MaHD}",
+            arguments = listOf(navArgument("MaHD"){nullable = true})
+        ) {
+            var maHD = it.arguments?.getString("MaHD")
+            if(maHD != null)
+                ChiTietDonHang(navHostController, viewModel, maHD.toInt())
         }
+
     }
 }

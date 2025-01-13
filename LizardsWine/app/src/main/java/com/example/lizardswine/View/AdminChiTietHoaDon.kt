@@ -2,6 +2,7 @@ package com.example.lizardswine.View
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -17,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -28,6 +30,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -35,17 +42,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.lizardswine.Model.ChiTietHoaDon
-import com.example.lizardswine.Model.DS_AnhRuou
-import com.example.lizardswine.Model.HoaDon
+import com.example.lizardswine.Navigation.NavItem
 import com.example.lizardswine.View.Custom_Compose.CardChiTietThanhToan
 import com.example.lizardswine.View.Custom_Compose.CardDiaChi
+import com.example.lizardswine.View.Custom_Compose.CardHoaDon
 import com.example.lizardswine.View.Custom_Compose.CardPTThanhToan
 import com.example.lizardswine.View.Custom_Compose.CardThongTinRuou
+import com.example.lizardswine.ViewModel.HoaDonViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChiTietDonHang(navHostController: NavHostController) {
+fun ChiTietDonHang(navHostController: NavHostController, viewModel: HoaDonViewModel = remember { HoaDonViewModel() }, maHD: Int) {
 
     Scaffold(
         topBar = {
@@ -83,87 +90,110 @@ fun ChiTietDonHang(navHostController: NavHostController) {
                 .padding(10.dp)
                 .navigationBarsPadding()
         ) {
-            ChiTiet()
+            ChiTiet(viewModel, maHD)
         }
     }
 }
 
 
-val hoadons_test = (
-    HoaDon(1, "user2", "0987654321", "789 Pham Hung Quan 3 Cau Giay Hanoi",
-        listOf<ChiTietHoaDon>(
-            ChiTietHoaDon(listOf<DS_AnhRuou>(
-                DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-            ), "Rượu Vang Vivo Cabernet Sauvignon", 2, 700000,1400000),
-            ChiTietHoaDon(listOf<DS_AnhRuou>(
-                DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")), "Rượu Vang Septima Obra Reserva Malbec", 1, 600000,1200000),
-            ChiTietHoaDon(listOf<DS_AnhRuou>(
-                DS_AnhRuou("https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
-            ), "Rượu Vang Robert Mondavi Private Selection Cabernet Sauvignon", 1, 900000,1800000)
-        ), "Thanh toán khi nhận hàng", "Chờ giao hàng", "Giảm giá theo hóa đơn", 15, "2025-01-06", 200000, 180000)
-)
-
 @Composable
-fun ChiTiet() {
-    LazyColumn (
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(4.dp)
+fun ChiTiet(viewModel: HoaDonViewModel = remember { HoaDonViewModel() }, maHD: Int) {
 
-    ) {
-        item { CardDiaChi(hoadon = hoadons_test, {}) }
-        item { Spacer(modifier = Modifier.height(16.dp)) }
-        item {
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp) ,
-                backgroundColor = Color(0xFFE8F5E9),
-            ) {
-                Column (modifier = Modifier.width(intrinsicSize = IntrinsicSize.Min).padding(10.dp))
-                {
-                    Column{
-                        hoadons_test.ChiTietHoaDon.forEach{
-                            ruou -> CardThongTinRuou (ruou)
-                            Spacer(modifier = Modifier.height(8.dp))
+    val hoadon by viewModel.hoaDon.collectAsState()
+    val isLoading = viewModel.isLoading.collectAsState()
+    val message = viewModel.message.collectAsState()
+    val hoaDonData = hoadon?.getOrNull()
+
+    LaunchedEffect(Unit) {
+        viewModel.layChiTietHoaDonTheoMaHD(maHD)
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        when{
+            isLoading.value -> {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
+                    color = Color(0xFF0A2E1F)
+                )
+            }
+            hoadon != null -> {
+                LazyColumn (
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(4.dp)
+
+                ) {
+                    item { CardDiaChi(hoadon = hoadon) {} }
+                    item { Spacer(modifier = Modifier.height(16.dp)) }
+                    item {
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(8.dp) ,
+                            backgroundColor = Color(0xFFE8F5E9),
+                        ) {
+                            Column (modifier = Modifier.width(intrinsicSize = IntrinsicSize.Min).padding(10.dp))
+                            {
+                                Column{
+                                    hoaDonData?.ChiTietHoaDon?.forEach{
+                                        ruou -> CardThongTinRuou (ruou)
+                                        Spacer(modifier = Modifier.height(8.dp))
+                                    }
+                                }
+
+
+                                Divider(
+                                    color = Color.LightGray,
+                                    thickness = 1.dp,
+                                    modifier = Modifier.padding(vertical = 6.dp).padding(8.dp)
+                                )
+
+                                Row (modifier = Modifier.fillMaxWidth().padding(10.dp), Arrangement.End)
+                                {
+                                    Text(
+                                        text = "Thành tiền: ${hoaDonData?.TongTien}đ",
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 16.sp,
+                                        color = Color.Black
+                                    )
+                                }
+                            }
                         }
+
                     }
 
-
-                Divider(
-                    color = Color.LightGray,
-                    thickness = 1.dp,
-                    modifier = Modifier.padding(vertical = 6.dp).padding(8.dp)
+                    item { Spacer(modifier = Modifier.height(16.dp))}
+                    item { CardPTThanhToan(hoadon = hoadon)}
+                    item { Spacer(modifier = Modifier.height(16.dp))}
+                    item { CardChiTietThanhToan(hoadon = hoadon)}
+                    item { Spacer(modifier = Modifier.height(16.dp))}
+                    item {
+                        Button(
+                            onClick = {},
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFE8F5E9)),//0xFFE8F5E9
+                            border = BorderStroke(1.dp, Color(0xFF009688)),//0xFF009688
+                        ) {
+                            hoaDonData?.LoaitrangThai?.let { Text(text = it, color = Color(0xFF009688)) }
+                        }
+                    }
+                }
+            }
+            message.value != null -> {
+                Text(
+                    text = (message.value) ?: " ",
+                    modifier = Modifier.align(Alignment.Center)
                 )
-
-                Row (modifier = Modifier.fillMaxWidth().padding(10.dp), Arrangement.End)
-                {
-                    Text(
-                        text = "Thành tiền: ${hoadons_test.TongTien}đ",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp,
-                        color = Color.Black
-                    )
-                }
-                }
             }
-
-        }
-
-        item { Spacer(modifier = Modifier.height(16.dp))}
-        item { CardPTThanhToan(hoadon = hoadons_test)}
-        item { Spacer(modifier = Modifier.height(16.dp))}
-        item { CardChiTietThanhToan(hoadon = hoadons_test)}
-        item { Spacer(modifier = Modifier.height(16.dp))}
-        item {
-            Button(
-                onClick = {},
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFE8F5E9)),//0xFFE8F5E9
-                border = BorderStroke(1.dp, Color(0xFF009688)),//0xFF009688
-            ) {
-                Text(text = hoadons_test.LoaiTrangThai, color = Color(0xFF009688))
+            else -> {
+                Text(
+                    text = "OMG! Api có vấn đề.",
+                    modifier = Modifier.align(Alignment.Center)
+                )
             }
         }
+
     }
+
+
 }
 

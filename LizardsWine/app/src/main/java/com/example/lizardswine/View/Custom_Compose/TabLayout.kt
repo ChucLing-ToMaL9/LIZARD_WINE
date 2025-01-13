@@ -24,6 +24,7 @@ import com.example.lizardswine.View.DS_DaGiao
 import com.example.lizardswine.View.DS_DaHuy
 import com.example.lizardswine.View.DS_DangGiao
 import com.example.lizardswine.ViewModel.HoaDonViewModel
+import com.example.lizardswine.ViewModel.LoaiRuouViewModel
 
 
 @Composable
@@ -61,10 +62,10 @@ fun TabLayout(navHostController: NavHostController, viewModel: HoaDonViewModel) 
 
         when (selectedTabIndex) {
             0 -> DS_ChoXacNhan(navHostController, viewModel)
-            1 -> DS_DaDuyet(navHostController)
-            2 -> DS_DangGiao(navHostController)
-            3 -> DS_DaGiao(navHostController)
-            4 -> DS_DaHuy(navHostController)
+            1 -> DS_DaDuyet(navHostController, viewModel)
+            2 -> DS_DangGiao(navHostController, viewModel)
+            3 -> DS_DaGiao(navHostController, viewModel)
+            4 -> DS_DaHuy(navHostController, viewModel)
         }
     }
 }
