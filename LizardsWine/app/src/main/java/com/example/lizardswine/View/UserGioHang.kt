@@ -1,6 +1,7 @@
 package com.example.lizardswine.View
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,11 +16,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -33,17 +37,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.example.lizardswine.Navigation.Screen
 import com.example.lizardswine.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GioHang(){
+fun GioHang(navHostController: NavHostController){
     Scaffold(
         topBar = {
             TopAppBar(
@@ -57,7 +64,9 @@ fun GioHang(){
                 },
                 navigationIcon = {
                     IconButton(
-                        onClick = {}
+                        onClick = {
+                            navHostController.popBackStack()
+                        }
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -68,9 +77,45 @@ fun GioHang(){
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(0xFF004D40)
-                )
+                ),
             )
         },
+        bottomBar = {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color(0xFF004D40))
+                    .navigationBarsPadding()
+                    .padding(0.dp).padding(top = 2.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Button(
+                    onClick = { },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.White),
+                    shape = RectangleShape, //Xóa border,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Text(text = "Tổng thành tiền:", color = Color(0xFF004D40))
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(text = "15000000", color = Color(0xFF004D40))
+                    }
+                }
+                Button(
+                    onClick = {
+                        navHostController.navigate(Screen.ThanhToan.route)
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF004D40)),
+                    modifier = Modifier.weight(1f),
+                    shape = RectangleShape,
+                ) {
+                    Text(text = "Mua ngay", color = Color.White)
+                }
+            }
+        }
 
         ) { innerPadding ->
         LazyColumn(
@@ -79,9 +124,6 @@ fun GioHang(){
                 .fillMaxSize()
                 .navigationBarsPadding()
         ) {
-            item {
-                CardDiaChi()
-            }
             item{
                 Row(
                     modifier = Modifier
@@ -104,56 +146,8 @@ fun GioHang(){
             items(3){index ->
                 CartItem()
             }
-            item {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth().padding(8.dp)
-                ) {
-                    androidx.compose.material.Divider(
-                        color = Color(0xFF004D40),
-                        thickness = 1.dp,
-                        modifier = Modifier.weight(1f)
-                    )
-                    Text(
-                        text = "Một số sản phẩm khác",color = Color(0xFF004D40), fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(horizontal = 16.dp)
-                    )
-                    androidx.compose.material.Divider(
-                        color = Color(0xFF004D40),
-                        thickness = 1.dp,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-            }
 
         }
-    }
-}
-@Composable
-fun CardDiaChi(){
-    androidx.compose.material.Card(
-        modifier = Modifier.fillMaxWidth().padding(8.dp),
-        backgroundColor = Color(0xFFE8F5E9),
-        shape = RoundedCornerShape(8.dp),
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Text(text = "Trường", fontWeight = FontWeight.Bold, color = Color(0xFF0A2E1F))
-                Text(text = "111 Đường a")
-            }
-            Column(modifier = Modifier.padding(16.dp).padding(start = 10.dp)) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                    contentDescription = "Arrow",
-                    modifier = Modifier.size(20.dp)
-                )
-            }
-        }
-
     }
 }
 
@@ -230,7 +224,6 @@ fun CartItem() {
                     )
                 }
             }
-
 
         }
     }

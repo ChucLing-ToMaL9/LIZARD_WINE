@@ -39,11 +39,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.lizardswine.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DanhGiaSanPham() {
+fun DanhGiaSanPham(navHostController: NavHostController) {
     val rating = remember { mutableStateOf(4) }
     val feedbackText = remember { mutableStateOf("") }
 

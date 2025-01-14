@@ -35,12 +35,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.example.lizardswine.Navigation.Screen
 import com.example.lizardswine.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LichSuMuaHang() {
-
+fun LichSuMuaHang(navHostController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -69,8 +70,7 @@ fun LichSuMuaHang() {
                     titleContentColor = Color.White
                 )
             )
-        },
-        bottomBar = { BottomNavigationLichSu() }
+        }
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
@@ -79,19 +79,20 @@ fun LichSuMuaHang() {
                 .background(Color(0xFFF5F5F5))
         ) {
             items(count = 10){
-                Card()
+                Card(navHostController)
             }
         }
     }
 
 }
 @Composable
-fun Card(){
+fun Card(navHostController: NavHostController){
     androidx.compose.material.Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp)
             .clickable {
+                navHostController.navigate(Screen.ThanhToan.route)// xem chi tiet don hang
             },
         shape = RoundedCornerShape(8.dp),
         backgroundColor = Color(0xFFE8F5E9),
@@ -160,7 +161,7 @@ fun Card(){
                 horizontalArrangement = Arrangement.End
             ) {
                 Button(
-                    onClick = { },
+                    onClick = { navHostController.navigate(Screen.DSDanhGiaRuou.route) },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFE8F5E9)),
                     border = BorderStroke(1.dp, Color.Gray),
                     //modifier = Modifier.weight(1.5f)
@@ -169,7 +170,7 @@ fun Card(){
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 Button(
-                    onClick = {},
+                    onClick = {navHostController.navigate(Screen.ThanhToan.route)},
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFE8F5E9)),
                     border = BorderStroke(1.dp, Color.Gray),
                     //modifier = Modifier.weight(1f)
@@ -181,39 +182,3 @@ fun Card(){
     }
 }
 
-@Composable
-fun BottomNavigationLichSu() {
-    BottomNavigation(
-        backgroundColor = Color.White,
-        contentColor = Color(0xFF004D40)
-    ) {
-        BottomNavigationItem(
-            icon = { Icon(painter = painterResource(id = R.drawable.homeblack),
-                contentDescription = "Home", Modifier.size(25.dp).padding(bottom = 3.dp)) },
-            label = { Text(text = "Trang chủ", style = TextStyle(fontSize = 13.sp)) },
-            selected = true,
-            onClick = {}
-        )
-        BottomNavigationItem(
-            icon = { Icon(painter = painterResource(id = R.drawable.historyblack),
-                contentDescription = "History", Modifier.size(25.dp).padding(bottom = 3.dp)) },
-            label = { Text(text = "Lịch sử", style = TextStyle(fontSize = 13.sp)) },
-            selected = true,
-            onClick = {}
-        )
-        BottomNavigationItem(
-            icon = { Icon(painter = painterResource(id = R.drawable.bell),
-                contentDescription = "Bell", Modifier.size(25.dp).padding(bottom = 3.dp)) },
-            label = { Text(text = "Thông báo", style = TextStyle(fontSize = 13.sp)) },
-            selected = true,
-            onClick = {}
-        )
-        BottomNavigationItem(
-            icon = { Icon(painter = painterResource(id = R.drawable.user),
-                contentDescription = "User", Modifier.size(25.dp).padding(bottom = 3.dp)) },
-            label = { Text(text = "Tài khoản", style = TextStyle(fontSize = 13.sp)) },
-            selected = true,
-            onClick = {}
-        )
-    }
-}

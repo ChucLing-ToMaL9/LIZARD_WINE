@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -25,6 +26,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -53,16 +56,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.navigation.NavHostController
 import com.example.lizardswine.R
 import java.text.DecimalFormat
 import com.example.lizardswine.Model.ChiTietSanPham
+import com.example.lizardswine.Model.Ruou
+import com.example.lizardswine.Navigation.Screen
+import com.example.lizardswine.View.Custom_Compose.CardDSRuouTheoDanhMuc
+import com.example.lizardswine.View.Custom_Compose.CardDanhGiaRuou
+
 
 @SuppressLint("UnrememberedMutableState")
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun ChiTietSanPham() {
-    val chiTietRuou = (
-            ChiTietSanPham(
+fun ChiTietSanPham(navHostController: NavHostController) {
+    val chiTietRuou = ChiTietSanPham(
                 "",
                 "Vang Septima Obra Reserva Malbec",
                 100000000,
@@ -70,9 +78,48 @@ fun ChiTietSanPham() {
                 "Vang đen thui",
                 13,
                 750
-            )
-            )
-
+    )
+    val dsRuou = listOf(
+        Ruou("1","1","ABC","1", emptyList(), "ABC",
+            "VN", "750", "570", "1980", "con", "cay"
+            ,"12000000", "21", "ngon", "1"),
+        Ruou("1","1","ABC","1", emptyList(), "ABC",
+            "VN", "750", "570", "1980", "con", "cay"
+            ,"12000000", "21", "ngon", "1"),
+        Ruou("1","1","ABC","1", emptyList(), "ABC",
+            "VN", "750", "570", "1980", "con", "cay"
+            ,"12000000", "21", "ngon", "1"),
+        Ruou("1","1","ABC","1", emptyList(), "ABC",
+            "VN", "750", "570", "1980", "con", "cay"
+            ,"12000000", "21", "ngon", "1"),
+        Ruou("1","1","ABC","1", emptyList(), "ABC",
+            "VN", "750", "570", "1980", "con", "cay"
+            ,"12000000", "21", "ngon", "1"),
+        Ruou("1","1","ABC","1", emptyList(), "ABC",
+            "VN", "750", "570", "1980", "con", "cay"
+            ,"12000000", "21", "ngon", "1"),
+        Ruou("1","1","ABC","1", emptyList(), "ABC",
+            "VN", "750", "570", "1980", "con", "cay"
+            ,"12000000", "21", "ngon", "1"),
+        Ruou("1","1","ABC","1", emptyList(), "ABC",
+            "VN", "750", "570", "1980", "con", "cay"
+            ,"12000000", "21", "ngon", "1"),
+        Ruou("1","1","ABC","1", emptyList(), "ABC",
+            "VN", "750", "570", "1980", "con", "cay"
+            ,"12000000", "21", "ngon", "1"),
+        Ruou("1","1","ABC","1", emptyList(), "ABC",
+            "VN", "750", "570", "1980", "con", "cay"
+            ,"12000000", "21", "ngon", "1"),
+        Ruou("1","1","ABC","1", emptyList(), "ABC",
+            "VN", "750", "570", "1980", "con", "cay"
+            ,"12000000", "21", "ngon", "1"),
+        Ruou("1","1","ABC","1", emptyList(), "ABC",
+            "VN", "750", "570", "1980", "con", "cay"
+            ,"12000000", "21", "ngon", "1"),
+        Ruou("1","1","ABC","1", emptyList(), "ABC",
+            "VN", "750", "570", "1980", "con", "cay"
+            ,"12000000", "21", "ngon", "1")
+    )
 
     val listState = rememberLazyListState()
     val maxAlphaScroll = 300f // Khoảng cách cuộn tối đa để đạt alpha = 1
@@ -86,48 +133,79 @@ fun ChiTietSanPham() {
         }
     }
 
-
-    Scaffold(
-        bottomBar = {
+    TopAppBar(
+        modifier = Modifier
+            .fillMaxWidth()
+            .zIndex(1f), // Đặt TopAppBar lên trên
+        title = {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color(0xFF004D40))
-                    //.navigationBarsPadding()
-                    .padding(0.dp).padding(top = 2.dp),
+                modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Button(
-                    onClick = { },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.White),
-                    shape = RectangleShape, //Xóa border,
-                    modifier = Modifier.weight(1f)
+                Box(
+                    modifier = Modifier
+                        .size(40.dp)
+                        .background(
+                            Color(0xFF0A2E1F).copy(alpha = 0.3f),
+                            shape = CircleShape
+                        )
+                        .padding(10.dp)
                 ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
+                    Image(
+                        painter = painterResource(id = R.drawable.arrow),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize().clickable {
+                            navHostController.popBackStack()
+                        }
+                    )
+                }
+                Row(modifier = Modifier.padding(10.dp)) {
+                    Box(
+                        modifier = Modifier
+                            .size(40.dp)
+                            .background(
+                                Color(0xFF0A2E1F).copy(alpha = 0.3f),
+                                shape = CircleShape
+                            )
+                            .padding(10.dp)
                     ) {
-                        Icon(
+                        Image(
+                            painter = painterResource(id = R.drawable.search),
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+                    Spacer(modifier = Modifier.padding(10.dp))
+                    Box(
+                        modifier = Modifier
+                            .size(40.dp)
+                            .background(
+                                Color(0xFF0A2E1F).copy(alpha = 0.3f),
+                                shape = CircleShape
+                            )
+                            .padding(10.dp)
+                    ) {
+                        Image(
                             painter = painterResource(id = R.drawable.cart),
                             contentDescription = null,
-                            tint = Color(0xFF004D40),
-                            modifier = Modifier.size(20.dp)
+                            modifier = Modifier.fillMaxSize().clickable {
+                                navHostController.navigate(Screen.GioHang.route)
+                            }
                         )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(text = "Thêm vào giỏ hàng", color = Color(0xFF004D40))
                     }
                 }
-                Button(
-                    onClick = { },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF004D40)),
-                    modifier = Modifier.weight(1f),
-                    shape = RectangleShape,
-                ) {
-                    Text(text = "Mua ngay", color = Color.White)
-                }
             }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color(0xFF004D40).copy(alpha = alpha),
+            titleContentColor = Color.White
+        )
+    )
 
-        }
+
+    Scaffold(
+        bottomBar = { ButtonBarChiTietRuou(navHostController) }
     ) { paddingValues ->
         var soLuongSP  by remember{ mutableStateOf(1) }
         val formatter = DecimalFormat("#,###")
@@ -172,12 +250,12 @@ fun ChiTietSanPham() {
                                 Text ("5/5 ",  color = Color.Gray)
                                 NgoiSao(soLuong = 5)
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Text(
-                                    text = " (200) | Đã bán 111",
-                                    style = MaterialTheme.typography.body2,
-                                    color = Color.Gray
-                                )
                             }
+                            Text(
+                                text = "Đã bán 111",
+                                style = MaterialTheme.typography.body2,
+                                color = Color.Gray
+                            )
                         }
                         Spacer(modifier = Modifier.height(8.dp))
                         Divider(
@@ -186,22 +264,23 @@ fun ChiTietSanPham() {
                             modifier = Modifier.padding(vertical = 8.dp)
                         )
                         Spacer(modifier = Modifier.height(8.dp))
+                        Row{
+                            Icon(
+                                painter = painterResource(id = R.drawable.vietnam),
+                                contentDescription = null,
+                                tint = Color.Unspecified, // Vô hiệu hóa tint để giữ nguyên màu gốc
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Spacer(modifier = Modifier.width(5.dp))
+                            Text(text = chiTietRuou.XuatXu, color = Color.Gray)
+                        }
+                        Spacer(modifier = Modifier.width(6.dp))
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Row{
-                                Icon(
-                                    painter = painterResource(id = R.drawable.vietnam),
-                                    contentDescription = null,
-                                    tint = Color.Unspecified, // Vô hiệu hóa tint để giữ nguyên màu gốc
-                                    modifier = Modifier.size(20.dp)
-                                )
-                                Spacer(modifier = Modifier.width(5.dp))
-                                Text(text = chiTietRuou.XuatXu, color = Color.Gray)
-                            }
-                            Spacer(modifier = Modifier.width(6.dp))
+
                             Row {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_wine),
@@ -270,7 +349,7 @@ fun ChiTietSanPham() {
                         verticalAlignment = Alignment.CenterVertically
                     )
                     {
-                        Text("Số lượng:", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color(0xFF0A2E1F))
+                        Text("Số lượng:", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color(0xFF0A2E1F))
                         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.End){
                             IconButton(onClick = {
                                 if(soLuongSP > 1) {
@@ -280,9 +359,9 @@ fun ChiTietSanPham() {
                                 Icon(
                                     painter = painterResource(id = R.drawable.minus),
                                     contentDescription = null,
-                                    tint = Color(0xFF0A2E1F)
+                                    tint = Color(0xFF0A2E1F),
+                                    modifier = Modifier.size(20.dp)
                                 )
-
                             }
                             Text(soLuongSP.toString(),  fontSize = 20.sp,  color = Color(0xFF0A2E1F))
                             IconButton(onClick = {
@@ -293,7 +372,8 @@ fun ChiTietSanPham() {
                                 Icon(
                                     painter = painterResource(id = R.drawable.add),
                                     contentDescription = null,
-                                    tint = Color(0xFF0A2E1F)
+                                    tint = Color(0xFF0A2E1F),
+                                    modifier = Modifier.size(20.dp)
                                 )
                             }
                         }
@@ -323,59 +403,14 @@ fun ChiTietSanPham() {
                             )
                         }
 
-                        Row(
-                            verticalAlignment = Alignment.Top,
-                            modifier = Modifier.padding(bottom = 16.dp)
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.anhuser),
-                                contentDescription = "User Avatar",
-                                modifier = Modifier
-                                    .size(48.dp)
-                                    .clip(CircleShape)
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Column {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Text(
-                                        text = "Chai đẹp",fontWeight = FontWeight.Bold,
-                                        color = Color(0xFF0A2E1F)
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    NgoiSao(soLuong = 5)
-                                }
-                                Spacer(modifier = Modifier.height(4.dp))
-
-                                Text(
-                                    text = "Sản phẩm tốt, dùng rất ok, giao hàng cũng khá nhanh mọi người nên dùng thử nha :3",
-                                    style = MaterialTheme.typography.body2,
-                                    color = Color.Gray
-                                )
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Row(
-                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                    modifier = Modifier.fillMaxWidth()
-                                ) {
-                                    repeat(3) {
-                                        Image(
-                                            painter = painterResource(id = R.drawable.anhchairuou),
-                                            contentDescription = "Product Image",
-                                            modifier = Modifier
-                                                .size(60.dp)
-                                                .clip(RoundedCornerShape(4.dp))
-                                                .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
-                                        )
-                                    }
-                                }
-                            }
-                        }
+                        CardDanhGiaRuou()
 
                         Text(
                             text = "Xem tất cả >>",fontWeight = FontWeight.Bold,
                             color = Color(0xFF0A2E1F),
-                            modifier = Modifier.align(Alignment.End).clickable(onClick = {})
+                            modifier = Modifier.align(Alignment.End).clickable(onClick = {
+                                navHostController.navigate(Screen.XemDSDanhGia.route)
+                            })
                         )
                     }
                 }
@@ -401,83 +436,9 @@ fun ChiTietSanPham() {
                     }
                 }
                 item{
-                    FlowRow(
-                        modifier = Modifier.padding() .fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalArrangement = Arrangement.Center,
-                        maxItemsInEachRow = 2
-                    ){
-//                        dsRuou.forEach{
-//                                ruou -> WineItem(ruou)
-//                        }
-                    }
+                    CardDSRuouTheoDanhMuc(dsRuou,navHostController)
                 }
             }
-            TopAppBar(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .zIndex(1f), // Đặt TopAppBar lên trên
-                title = {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(40.dp)
-                                .background(
-                                    Color(0xFF0A2E1F).copy(alpha = 0.3f),
-                                    shape = CircleShape
-                                )
-                                .padding(10.dp)
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.arrow),
-                                contentDescription = null,
-                                modifier = Modifier.fillMaxSize()
-                            )
-                        }
-                        Row(modifier = Modifier.padding(10.dp)) {
-                            Box(
-                                modifier = Modifier
-                                    .size(40.dp)
-                                    .background(
-                                        Color(0xFF0A2E1F).copy(alpha = 0.3f),
-                                        shape = CircleShape
-                                    )
-                                    .padding(10.dp)
-                            ) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.search),
-                                    contentDescription = null,
-                                    modifier = Modifier.fillMaxSize()
-                                )
-                            }
-                            Spacer(modifier = Modifier.padding(10.dp))
-                            Box(
-                                modifier = Modifier
-                                    .size(40.dp)
-                                    .background(
-                                        Color(0xFF0A2E1F).copy(alpha = 0.3f),
-                                        shape = CircleShape
-                                    )
-                                    .padding(10.dp)
-                            ) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.cart),
-                                    contentDescription = null,
-                                    modifier = Modifier.fillMaxSize()
-                                )
-                            }
-                        }
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF004D40).copy(alpha = alpha),
-                    titleContentColor = Color.White
-                )
-            )
         }
     }
 }
@@ -495,3 +456,48 @@ fun NgoiSao(soLuong: Int) {
         }
     }
 }
+
+@Composable
+fun ButtonBarChiTietRuou(navHostController: NavHostController){
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color(0xFF004D40))
+            .navigationBarsPadding()
+            .padding(0.dp).padding(top = 2.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Button(
+            onClick = { },
+            colors = ButtonDefaults.buttonColors(containerColor = Color.White),
+            shape = RectangleShape, //Xóa border,
+            modifier = Modifier.weight(1f)
+        ) {
+            Column(
+                modifier = Modifier.clickable {},
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.cart),
+                    contentDescription = null,
+                    tint = Color(0xFF004D40),
+                    modifier = Modifier.size(20.dp)
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(text = "Thêm vào giỏ hàng", color = Color(0xFF004D40))
+            }
+        }
+        Button(
+            onClick = {
+                navHostController.navigate(Screen.ThanhToan.route)
+            },
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF004D40)),
+            modifier = Modifier.weight(1f),
+            shape = RectangleShape,
+        ) {
+            Text(text = "Mua ngay", color = Color.White)
+        }
+    }
+}
+

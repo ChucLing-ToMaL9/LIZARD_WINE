@@ -1,5 +1,6 @@
 package com.example.lizardswine.View
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -85,13 +86,14 @@ fun DangKy(navHostController: NavHostController) {
         }
     )
     {innerPadding ->
-        LazyColumn (modifier = Modifier.padding(innerPadding).padding(12.dp).navigationBarsPadding())
+
+        LazyColumn (modifier = Modifier.padding(innerPadding).padding(12.dp).background(color = Color(0xFFE8F5E9)))
         {
             item { Spacer(modifier = Modifier.height(12.dp)) }
             item { Text("Tên đăng nhập", fontSize = 14.sp, color = Color(0xFF188158), fontWeight = FontWeight.Bold) }
             item {Spacer(modifier = Modifier.height(8.dp)) }
             item {
-            OutlinedTextField(
+                OutlinedTextField(
                     value = username,
                     onValueChange = { if (it.length <= 20) username = it },
                     placeholder = { Text("Tên đăng nhập (tối đa 20 ký tự)") },
@@ -202,6 +204,7 @@ fun DangKy(navHostController: NavHostController) {
             }
             item { Spacer(modifier = Modifier.height(12.dp)) }
         }
+
     }
 }
 

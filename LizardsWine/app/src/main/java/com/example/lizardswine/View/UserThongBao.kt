@@ -69,8 +69,7 @@ fun ThongBao() {
                     titleContentColor = Color.White
                 )
             )
-        },
-        bottomBar = { BottomNavigationThongBao() }
+        }
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
@@ -221,41 +220,4 @@ fun ThongBao() {
 
     }
 
-}
-
-@Composable
-fun BottomNavigationThongBao() {
-    BottomNavigation(
-        backgroundColor = Color.White,
-        contentColor = Color(0xFF004D40)
-    ) {
-        BottomNavigationItem(
-            icon = { Icon(painter = painterResource(id = R.drawable.homeblack),
-                contentDescription = "Home", Modifier.size(25.dp).padding(bottom = 3.dp)) },
-            label = { Text(text = "Trang chủ", style = TextStyle(fontSize = 13.sp)) },
-            selected = true,
-            onClick = {}
-        )
-        BottomNavigationItem(
-            icon = { Icon(painter = painterResource(id = R.drawable.history),
-                contentDescription = "History", Modifier.size(25.dp).padding(bottom = 3.dp)) },
-            label = { Text(text = "Lịch sử", style = TextStyle(fontSize = 13.sp)) },
-            selected = true,
-            onClick = {}
-        )
-        BottomNavigationItem(
-            icon = { Icon(painter = painterResource(id = R.drawable.bellblack),
-                contentDescription = "Bell", Modifier.size(25.dp).padding(bottom = 3.dp)) },
-            label = { Text(text = "Thông báo", style = TextStyle(fontSize = 13.sp)) },
-            selected = true,
-            onClick = {}
-        )
-        BottomNavigationItem(
-            icon = { Icon(painter = painterResource(id = R.drawable.user),
-                contentDescription = "User", Modifier.size(25.dp).padding(bottom = 3.dp)) },
-            label = { Text(text = "Tài khoản", style = TextStyle(fontSize = 13.sp)) },
-            selected = true,
-            onClick = {}
-        )
-    }
 }

@@ -95,7 +95,6 @@ fun DangNhap(navHostController: NavHostController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .navigationBarsPadding()
                 .background(Color(0xFFE8F5E9))
                 .padding(12.dp),
         ) {
@@ -146,7 +145,7 @@ fun DangNhap(navHostController: NavHostController) {
             Button(
                 onClick = {
                     errorMessage = validateInputs(username, password)
-                    navHostController.navigate(Screen.UserTrangChu.route)
+                    navHostController.navigate(Screen.ManHinhChinh.route)
                 },
                 modifier = Modifier
                     .fillMaxWidth()

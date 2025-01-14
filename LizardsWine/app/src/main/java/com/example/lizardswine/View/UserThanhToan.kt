@@ -1,9 +1,9 @@
 package com.example.lizardswine.View
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,12 +19,10 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -36,32 +34,38 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.example.lizardswine.Model.Anh
+import com.example.lizardswine.Model.ChiTietHoaDon
+import com.example.lizardswine.Model.DS_AnhRuou
 import com.example.lizardswine.R
+import com.example.lizardswine.View.Custom_Compose.CardDiaChiNguoiDung
+import com.example.lizardswine.View.Custom_Compose.CardThongTinRuou
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ThanhToan() {
+fun ThanhToan(navHostController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    androidx.compose.material3.Text(
+                    Text(
                         text = "Thanh toán",
                         color = Color.White,
                         fontWeight = FontWeight.Bold
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color.White,
-                            modifier = Modifier.size(28.dp)
-                        )
-                    }
+
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back",
+                        tint = Color.White,
+                        modifier = Modifier.size(28.dp).clickable { navHostController.popBackStack() }
+                    )
+
                 },
-                colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = Color(0xFF003D24))
+                colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = Color(0xFF0A2E1F))
             )
         },
         bottomBar = {
@@ -76,8 +80,10 @@ fun ThanhToan() {
                     Text(text = "850.000đ", color = Color.Black, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 }
                 Button(
-                    onClick = {},
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF4CAF50))
+                    onClick = {
+
+                    },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF004D40))
                 ) {
                     Text(text = "Đặt hàng", color = Color.White, fontSize = 16.sp, modifier = Modifier.padding(vertical = 8.dp, horizontal = 12.dp))
                 }
@@ -97,31 +103,15 @@ fun ThanhToan() {
 
 @Composable
 fun ChiTietThanhToan() {
+    val ruou = ChiTietHoaDon(1, listOf<DS_AnhRuou>(
+        DS_AnhRuou(1, "https://bewinemart.ducanhzed.com/uploads/images/medium_images/Vang-Femar-Roma-rosso-DOC.jpg")
+    ), "Vang", 2, 150000, 350000)
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(4.dp)
     ) {
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            backgroundColor = Color(0xFFE8F5E9),
-            shape = RoundedCornerShape(8.dp)
-        ) {
-            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically){
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(text = "Chúc Ling | 0392338000", fontWeight = FontWeight.Bold)
-                    Text(text = "Xã Phước Kiển, Huyện Nhà Bè, Hồ Chí Minh")
-                }
-                Column(modifier = Modifier.padding(16.dp).padding(start = 35.dp)) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                        contentDescription = "Arrow",
-                        modifier = Modifier.size(20.dp)
-                    )
-                }
-            }
-
-        }
+        CardDiaChiNguoiDung()
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -130,39 +120,24 @@ fun ChiTietThanhToan() {
             shape = RoundedCornerShape(8.dp) ,
             backgroundColor = Color(0xFFE8F5E9),
         ) {
-            Column (modifier = Modifier.fillMaxWidth())
+            Column (modifier = Modifier.width(intrinsicSize = IntrinsicSize.Min).padding(10.dp))
             {
-                Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-                    Image(
-                        painter = painterResource(id = R.drawable.anhchairuou),
-                        contentDescription = "Product Image",
-                        modifier = Modifier.size(64.dp)
-                    )
-                    Spacer(modifier = Modifier.width(16.dp))
-                    Column {
-                        Text(
-                            text = "Vang Septima Obra Reserva Malbec",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 17.sp
-                        )
-                        Text(text = "Việt Nam")
-                        Spacer(modifier = Modifier.padding(vertical = 5.dp))
-                        Text(
-                            text = "900.000đ x 2",
-                            fontSize = 16.sp,
-                            color = Color.Black
-                        )
+                Column{
+//                    hoaDonData?.ChiTietHoaDon?.forEach{
+                            //ruou ->
+                        CardThongTinRuou (ruou)
+                        Spacer(modifier = Modifier.height(8.dp))
                     }
-                }
                 Divider(
                     color = Color.LightGray,
                     thickness = 1.dp,
-                    modifier = Modifier.padding(5.dp)
+                    modifier = Modifier.padding(vertical = 6.dp).padding(8.dp)
                 )
-                Row (modifier = Modifier.fillMaxWidth().padding(8.dp), Arrangement.End)
+
+                Row (modifier = Modifier.fillMaxWidth().padding(10.dp), Arrangement.End)
                 {
                     Text(
-                        text = "Thành tiền: 1.800.000đ",
+                        text = "Thành tiền: đ",//${hoaDonData?.TongTien}
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp,
                         color = Color.Black
@@ -171,6 +146,7 @@ fun ChiTietThanhToan() {
             }
 
         }
+
         Spacer(modifier = Modifier.height(16.dp))
         Card(
             modifier = Modifier
@@ -266,5 +242,9 @@ fun ChiTietThanhToan() {
             }
         }
 
+
     }
+
+
 }
+

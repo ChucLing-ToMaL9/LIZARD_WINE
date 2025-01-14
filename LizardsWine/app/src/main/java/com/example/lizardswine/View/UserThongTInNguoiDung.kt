@@ -40,16 +40,18 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.example.lizardswine.Navigation.Screen
 import com.example.lizardswine.R
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
-fun ThongTinNguoiDung() {
+fun ThongTinNguoiDung(navHostController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    TaiKhoan()
+                    TaiKhoan(navHostController)
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(0xFF004D40),
@@ -57,8 +59,7 @@ fun ThongTinNguoiDung() {
                 )
             )
 
-        },
-        bottomBar = { BottomNavigationThongTin()}
+        }
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
@@ -112,7 +113,7 @@ fun ThongTinNguoiDung() {
 }
 
 @Composable
-fun TaiKhoan() {
+fun TaiKhoan(navHostController: NavHostController) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -149,7 +150,7 @@ fun TaiKhoan() {
                 modifier = Modifier
                     .size(40.dp)
                     .padding(end = 16.dp)
-                    .clickable { }
+                    .clickable { navHostController.navigate(Screen.CaiDat.route)}
             )
             Icon(
                 painter = painterResource(id = R.drawable.cart),
@@ -158,7 +159,7 @@ fun TaiKhoan() {
                 modifier = Modifier
                     .size(40.dp)
                     .padding(end = 16.dp)
-                    .clickable { }
+                    .clickable {navHostController.navigate(Screen.GioHang.route) }
             )
         }
 
@@ -262,43 +263,6 @@ fun NavigationItem(iconId: Int, label: String) {
             contentDescription = null,
             tint = Color.Gray,
             modifier = Modifier.size(16.dp)
-        )
-    }
-}
-
-@Composable
-fun BottomNavigationThongTin() {
-    BottomNavigation(
-        backgroundColor = Color.White,
-        contentColor = Color(0xFF004D40)
-    ) {
-        BottomNavigationItem(
-            icon = { Icon(painter = painterResource(id = R.drawable.homeblack),
-                contentDescription = "Home", Modifier.size(25.dp).padding(bottom = 3.dp)) },
-            label = { androidx.compose.material.Text(text = "Trang chủ", style = TextStyle(fontSize = 13.sp)) },
-            selected = true,
-            onClick = {}
-        )
-        BottomNavigationItem(
-            icon = { Icon(painter = painterResource(id = R.drawable.history),
-                contentDescription = "History", Modifier.size(25.dp).padding(bottom = 3.dp)) },
-            label = { androidx.compose.material.Text(text = "Lịch sử", style = TextStyle(fontSize = 13.sp)) },
-            selected = true,
-            onClick = {}
-        )
-        BottomNavigationItem(
-            icon = { Icon(painter = painterResource(id = R.drawable.bell),
-                contentDescription = "Bell", Modifier.size(25.dp).padding(bottom = 3.dp)) },
-            label = { androidx.compose.material.Text(text = "Thông báo", style = TextStyle(fontSize = 13.sp)) },
-            selected = true,
-            onClick = {}
-        )
-        BottomNavigationItem(
-            icon = { Icon(painter = painterResource(id = R.drawable.userblack),
-                contentDescription = "User", Modifier.size(25.dp).padding(bottom = 3.dp)) },
-            label = { androidx.compose.material.Text(text = "Tài khoản", style = TextStyle(fontSize = 13.sp)) },
-            selected = true,
-            onClick = {}
         )
     }
 }
