@@ -1,0 +1,282 @@
+[
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.example.lizardswine.app-main-58:/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_wine1.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/wine1.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_user.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/user.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_vidientu.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/vidientu.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_bellblack.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/bellblack.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_vang.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/vang.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_box.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/box.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.lizardswine.app-main-58:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/mipmap-xhdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.example.lizardswine.app-main-58:/mipmap-xhdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_italy.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/italy.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_home.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/home.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_ic_new.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/ic_new.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_hamburger.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/hamburger.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.lizardswine.app-main-58:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_cancelblack.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/cancelblack.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_approvalblack.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/approvalblack.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/xml_backup_rules.xml.flat",
+        "source": "com.example.lizardswine.app-main-58:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_arrow.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/arrow.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_booking.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/booking.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_momo_ic.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/momo_ic.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.example.lizardswine.app-main-58:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_delivery.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/delivery.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_ic_wine.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/ic_wine.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_add.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/add.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_approval.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/approval.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_thanhtoan.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/thanhtoan.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_bell.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/bell.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/mipmap-xxxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.example.lizardswine.app-main-58:/mipmap-xxxhdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_history.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/history.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_bookingblack.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/bookingblack.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.lizardswine.app-main-58:/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_anhuser.jpg.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/anhuser.jpg"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_cart.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/cart.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.lizardswine.app-main-58:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_deliveryblack.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/deliveryblack.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_ic_wine_alcohol_degree.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/ic_wine_alcohol_degree.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.lizardswine.app-main-58:/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_momo.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/momo.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_vietnam.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/vietnam.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/mipmap-mdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.example.lizardswine.app-main-58:/mipmap-mdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_ruou2tbn.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/ruou2tbn.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_search.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/search.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_question.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/question.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.lizardswine.app-main-58:/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_conversation.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/conversation.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_wallet.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/wallet.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.example.lizardswine.app-main-58:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.example.lizardswine.app-main-58:/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_settings.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/settings.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_layhang.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/layhang.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/mipmap-xxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.example.lizardswine.app-main-58:/mipmap-xxhdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_userblack.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/userblack.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/xml_data_extraction_rules.xml.flat",
+        "source": "com.example.lizardswine.app-main-58:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.lizardswine.app-main-58:/mipmap-hdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_ruou3.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/ruou3.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_anhchairuou.jpg.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/anhchairuou.jpg"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_minus.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/minus.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_wine2.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/wine2.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_anhquanruou.jpeg.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/anhquanruou.jpeg"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_cancel.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/cancel.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.example.lizardswine.app-main-58:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_ic_wine_bottle_size.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/ic_wine_bottle_size.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_homeblack.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/homeblack.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_anhchitietruou.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/anhchitietruou.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_danhgia.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/danhgia.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_zalopay.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/zalopay.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/drawable_historyblack.png.flat",
+        "source": "com.example.lizardswine.app-main-58:/drawable/historyblack.png"
+    },
+    {
+        "merged": "com.example.lizardswine.app-debug-56:/mipmap-hdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.example.lizardswine.app-main-58:/mipmap-hdpi/ic_launcher_foreground.webp"
+    }
+]
