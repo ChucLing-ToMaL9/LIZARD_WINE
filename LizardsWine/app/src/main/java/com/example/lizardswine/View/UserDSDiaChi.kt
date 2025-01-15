@@ -1,15 +1,15 @@
 package com.example.lizardswine.View
 
-import androidx.compose.foundation.background
+import com.example.lizardswine.View.Custom_Compose.CardDiaChiNguoiDung
+
+
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -20,8 +20,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -31,17 +29,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.lizardswine.Navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SuaTen(navHostController: NavHostController) {
+fun DSDiaChi(navHostController: NavHostController) {
     var text by remember { mutableStateOf("Thi Nhân") }
 
     Scaffold(
@@ -49,7 +46,7 @@ fun SuaTen(navHostController: NavHostController) {
             TopAppBar(
                 title = {
                     Text(
-                        text = "Sửa tên",
+                        text = "Địa chỉ",
                         color = Color.White,
                         fontWeight = FontWeight.Bold
                     )
@@ -74,45 +71,13 @@ fun SuaTen(navHostController: NavHostController) {
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color(0xFFE8F5E9), RoundedCornerShape(8.dp)),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                TextField(
-                    value = text,
-                    onValueChange = { text = it },
-                    placeholder = { Text(text = "Nhập tên mới...") },
-                    modifier = Modifier
-                        .weight(1f)
-                        .background(Color.Transparent),
-                    colors = TextFieldDefaults.textFieldColors(
-                        containerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent
-                    )
-                )
-                IconButton(
-                    onClick = { text = "" },
-                    modifier = Modifier
-                        .size(28.dp)
-                        .padding(end = 8.dp)
-                        .clip(CircleShape)
-                ) {
-                    Icon(
-                        painter = painterResource(id = android.R.drawable.ic_menu_close_clear_cancel),
-                        contentDescription = "Clear",
-                        tint = Color(0xFF004D40)
-                    )
-                }
-            }
+            CardDiaChiNguoiDung()
 
             Spacer(modifier = Modifier.weight(1f)) // Đẩy nút xuống cuối màn hình
 
             Button(
                 onClick = {
-
+                    navHostController.navigate(Screen.CapNhatDiaChi.route)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -124,7 +89,7 @@ fun SuaTen(navHostController: NavHostController) {
                 shape = RoundedCornerShape(8.dp) // Bo góc
             ) {
                 Text(
-                    text = "Lưu",
+                    text = "Thêm địa chỉ mới",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )

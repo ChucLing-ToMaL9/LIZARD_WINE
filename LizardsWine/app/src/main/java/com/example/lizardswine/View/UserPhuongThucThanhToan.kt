@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -21,6 +22,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -33,26 +36,28 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.lizardswine.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PhuongThucThanhToan() {
+fun PhuongThucThanhToan(navHostController: NavHostController) {
     val chonPhuongThuc = remember { mutableStateOf("Ví MoMo") }
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    androidx.compose.material3.Text(
+                    Text(
                         text = "Phương thức thanh thoán",
                         color = Color.White,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp,
                     )
                 },
                 navigationIcon = {
-                    androidx.compose.material3.IconButton(onClick = { }) {
-                        androidx.compose.material3.Icon(
+                    IconButton(onClick = { navHostController.popBackStack()}) {
+                        Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
                             tint = Color.White,
@@ -67,14 +72,14 @@ fun PhuongThucThanhToan() {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp),
+                    .padding(10.dp).navigationBarsPadding(),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Button(
                     onClick = {  },
-                    modifier = Modifier.fillMaxWidth().padding(15.dp),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF4CAF50))
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF003D24))
                 ) {
                     Text(text = "Đồng ý", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(10.dp))
                 }

@@ -39,13 +39,13 @@ import androidx.navigation.NavHostController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DoiMatKhau(navHostController: NavHostController) {
+fun CapNhatDiaChi(navHostController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        text = "Đổi mật khẩu",
+                        text = "Thêm địa chỉ mới",
                         color = Color.White,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
@@ -76,7 +76,7 @@ fun DoiMatKhau(navHostController: NavHostController) {
         ) {
             // TextField: Mật khẩu cũ
             var oldPassword by remember { mutableStateOf("") }
-            PasswordTextField(
+            TextFileDiaChi(
                 value = oldPassword,
                 onValueChange = { oldPassword = it },
                 label = "Nhập mật khẩu cũ"
@@ -86,7 +86,7 @@ fun DoiMatKhau(navHostController: NavHostController) {
 
             // TextField: Mật khẩu mới
             var newPassword by remember { mutableStateOf("") }
-            PasswordTextField(
+            TextFileDiaChi(
                 value = newPassword,
                 onValueChange = { newPassword = it },
                 label = "Nhập mật khẩu mới"
@@ -96,9 +96,18 @@ fun DoiMatKhau(navHostController: NavHostController) {
 
             // TextField: Nhập lại mật khẩu mới
             var confirmPassword by remember { mutableStateOf("") }
-            PasswordTextField(
+            TextFileDiaChi(
                 value = confirmPassword,
                 onValueChange = { confirmPassword = it },
+                label = "Nhập lại mật khẩu mới"
+            )
+
+            Spacer(modifier = Modifier.height(32.dp))
+            // TextField: Nhập lại mật khẩu mới
+            var tinh by remember { mutableStateOf("") }
+            TextFileDiaChi(
+                value = confirmPassword,
+                onValueChange = { tinh = it },
                 label = "Nhập lại mật khẩu mới"
             )
 
@@ -148,7 +157,7 @@ fun DoiMatKhau(navHostController: NavHostController) {
                 shape = RoundedCornerShape(8.dp) // Bo góc
             ) {
                 Text(
-                    text = "Lưu mật khẩu",
+                    text = "Lưu địa chỉ",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -160,7 +169,7 @@ fun DoiMatKhau(navHostController: NavHostController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordTextField(
+fun TextFileDiaChi(
     value: String,
     onValueChange: (String) -> Unit,
     label: String

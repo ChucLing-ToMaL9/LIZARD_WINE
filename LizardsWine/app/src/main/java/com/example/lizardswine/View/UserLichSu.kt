@@ -52,19 +52,6 @@ fun LichSuMuaHang(navHostController: NavHostController) {
                         Text("Lịch sử mua hàng", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
                     }
                 },
-                actions = {
-                    Row (modifier = Modifier.padding(10.dp),
-                        horizontalArrangement = Arrangement.Center)
-                    {
-                        Icon(
-                            painter = painterResource(id = R.drawable.search),
-                            contentDescription = "Cart",
-                            tint = Color.White,
-                            modifier = Modifier.size(26.dp)
-                                .clickable(onClick = {})
-                        )
-                    }
-                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(0xFF004D40),
                     titleContentColor = Color.White

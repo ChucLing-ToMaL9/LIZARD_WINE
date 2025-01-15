@@ -39,11 +39,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.lizardswine.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DonDaMua() {
+fun DonDaMua(navHostController: NavHostController) {
     val tabTitles = listOf("Chờ xác nhận", "Đã xác nhận", "Đang giao", "Đã giao")
     var selectedTabIndex by remember { mutableStateOf(0) }
 
@@ -59,7 +60,7 @@ fun DonDaMua() {
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /* Xử lý khi nhấn nút back */ }) {
+                    IconButton(onClick = { navHostController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
@@ -68,7 +69,7 @@ fun DonDaMua() {
                     }
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = Color(0xFF003D24) // Màu nền xanh
+                    containerColor = Color(0xFF004D40) // Màu nền xanh
                 )
             )
         }
@@ -98,26 +99,26 @@ fun DonDaMua() {
             // Nội dung tab
             if (selectedTabIndex == 0) {
                 // Chờ xác nhận
-                ChoXacNhan()
+                ChoXacNhan(navHostController)
             }
             else if(selectedTabIndex == 1)
             {
-                DaXacNhan()
+                DaXacNhan(navHostController)
             }
             else if(selectedTabIndex == 2)
             {
-                DangGiao()
+                DangGiao(navHostController)
             }
             else
             {
-                DaGiao()
+                DaGiao(navHostController)
             }
         }
     }
 }
 
 @Composable
-fun ChoXacNhan() {
+fun ChoXacNhan(navHostController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -201,7 +202,7 @@ fun ChoXacNhan() {
 }
 
 @Composable
-fun DaXacNhan()
+fun DaXacNhan(navHostController: NavHostController)
 {
     Column(
         modifier = Modifier
@@ -287,7 +288,7 @@ fun DaXacNhan()
 }
 
 @Composable
-fun DangGiao()
+fun DangGiao(navHostController: NavHostController)
 {
     Column(
         modifier = Modifier
@@ -373,7 +374,7 @@ fun DangGiao()
 }
 
 @Composable
-fun DaGiao()
+fun DaGiao(navHostController: NavHostController)
 {
     Column(
         modifier = Modifier

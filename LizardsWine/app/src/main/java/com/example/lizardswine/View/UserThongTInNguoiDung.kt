@@ -22,6 +22,7 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -69,44 +70,11 @@ fun ThongTinNguoiDung(navHostController: NavHostController) {
         ) {
             item {
                 Spacer(modifier = Modifier.height(16.dp))
-                DonHangSection()
+                DonHangSection(navHostController){
+                        navHostController.navigate(Screen.DonDaMua.route)
+                }
                 Spacer(modifier = Modifier.height(16.dp))
-                NavigationItems()
-            }
-            item{
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth().padding(8.dp)
-                ) {
-                    Divider(
-                        color = Color.Gray,
-                        thickness = 1.dp,
-                        modifier = Modifier.weight(1f)
-                    )
-                    androidx.compose.material3.Text(
-                        text = "Một số sản phẩm khác",
-                        color = Color(0xFF2C5F2D),
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(horizontal = 16.dp)
-                    )
-                    Divider(
-                        color = Color.Gray,
-                        thickness = 1.dp,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-            }
-            item{
-                FlowRow(
-                    modifier = Modifier.padding() .fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalArrangement = Arrangement.Center,
-                    maxItemsInEachRow = 2
-                ){
-//                    ruouList.forEach{
-//                            ruou -> WineItem(ruou)
-//                    }
-                }
+                NavigationItems(navHostController)
             }
         }
     }
@@ -166,15 +134,17 @@ fun TaiKhoan(navHostController: NavHostController) {
 
     }
 }
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DonHangSection() {
+fun DonHangSection(navHostController: NavHostController, click: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
         shape = RoundedCornerShape(8.dp),
         backgroundColor = Color(0xFFE8F5E9),
-        elevation = 2.dp
+        elevation = 2.dp,
+        onClick = click
     ) {
         Column {
             Text(
@@ -199,7 +169,9 @@ fun DonHangSection() {
                     Column(
                         modifier = Modifier
                             .weight(1f)
-                            .clickable {},
+                            .clickable {
+
+                            },
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Icon(
@@ -223,25 +195,27 @@ fun DonHangSection() {
 }
 
 @Composable
-fun NavigationItems() {
+fun NavigationItems(navHostController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
     ) {
-        NavigationItem(iconId = R.drawable.vidientu, label = "Ví điện tử đã liên kết")
+        NavigationItem(iconId = R.drawable.vidientu, label = "Ví điện tử đã liên kết"){
+            navHostController.navigate(Screen.ViDienTu.route)
+        }
         Divider()
-        NavigationItem(iconId = R.drawable.conversation, label = "Trung tâm trợ giúp")
+        NavigationItem(iconId = R.drawable.conversation, label = "Trung tâm trợ giúp"){}
         Divider()
-        NavigationItem(iconId = R.drawable.question, label = "Trò chuyện với Lizard wine")
+        NavigationItem(iconId = R.drawable.question, label = "Trò chuyện với Lizard wine"){}
     }
 }
 @Composable
-fun NavigationItem(iconId: Int, label: String) {
+fun NavigationItem(iconId: Int, label: String, onclick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { }
+            .clickable { onclick()}
             .padding(vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

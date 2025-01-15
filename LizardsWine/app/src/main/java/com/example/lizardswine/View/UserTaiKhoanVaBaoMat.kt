@@ -29,17 +29,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.example.lizardswine.Navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun TaiKhoanBaoMat() {
+fun TaiKhoanBaoMat(navHostController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(text = "Tài khoản & bảo mật", color = Color.White, fontWeight = FontWeight.Bold) },
                 navigationIcon = {
-                    IconButton(onClick = {  }) {
+                    IconButton(onClick = { navHostController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
@@ -58,7 +60,9 @@ fun TaiKhoanBaoMat() {
                 .padding(innerPadding)
                 .padding(8.dp)
         ) {
-            AccountClickableRow(title = "Hồ sơ của tôi", onClick = { /* bấm vào để xem hồ sơ */ })
+            AccountClickableRow(title = "Hồ sơ của tôi", onClick = {
+                navHostController.navigate(Screen.HoSoNguoiDung.route)
+            })
 
             Spacer(modifier = Modifier.height(8.dp))
 

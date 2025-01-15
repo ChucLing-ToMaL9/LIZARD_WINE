@@ -34,12 +34,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.example.lizardswine.Navigation.Screen
 import com.example.lizardswine.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun SuaHoSo() {
+fun SuaHoSo(navHostController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -51,7 +53,7 @@ fun SuaHoSo() {
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { }) {
+                    IconButton(onClick = { navHostController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
@@ -95,26 +97,34 @@ fun SuaHoSo() {
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-            ProfileInfoRow(title = "Tên người dùng", value = "Thi Nhân", isEditable = true)
+            ProfileInfoRow(title = "Tên người dùng", value = "Thi Nhân", isEditable = true){
+                navHostController.navigate(Screen.SuaTen.route)
+            }
             Spacer(modifier = Modifier.height(8.dp))
-            ProfileInfoRow(title = "Điện thoại", value = "(+84) 333 8686 ****", isEditable = true)
+            ProfileInfoRow(title = "Điện thoại", value = "(+84) 333 8686 ****", isEditable = true){
+                navHostController.navigate(Screen.SuaSDT.route)
+            }
             Spacer(modifier = Modifier.height(8.dp))
-            ProfileInfoRow(title = "Email", value = "thinhan2004123@gmail.com", isEditable = true)
+            ProfileInfoRow(title = "Email", value = "thinhan2004123@gmail.com", isEditable = true){}
             Spacer(modifier = Modifier.height(8.dp))
-            ProfileInfoRow(title = "Giới tính", value = "Nam", isEditable = true)
+            ProfileInfoRow(title = "Mật khẩu", value = "******", isEditable = true){
+                navHostController.navigate(Screen.SuaMatKhau.route)
+            }
             Spacer(modifier = Modifier.height(8.dp))
-            ProfileInfoRow(title = "Ngày sinh", value = "**/09/20**", isEditable = true)
+            ProfileInfoRow(title = "Giới tính", value = "Nam", isEditable = true){}
+            Spacer(modifier = Modifier.height(8.dp))
+            ProfileInfoRow(title = "Ngày sinh", value = "**/09/20**", isEditable = true){}
         }
     }
 }
 
 @Composable
-fun ProfileInfoRow(title: String, value: String, isEditable: Boolean) {
+fun ProfileInfoRow(title: String, value: String, isEditable: Boolean, click: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color(0xFFE8F5E9), RoundedCornerShape(8.dp))
-            .clickable(enabled = isEditable) { /* quay lại  */ }
+            .clickable(enabled = isEditable) { click() }
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

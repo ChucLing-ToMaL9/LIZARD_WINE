@@ -60,7 +60,7 @@ fun DanhGiaSanPham(navHostController: NavHostController) {
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /* Handle back action */ }) {
+                    IconButton(onClick = { navHostController.popBackStack() }) {
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
@@ -69,7 +69,7 @@ fun DanhGiaSanPham(navHostController: NavHostController) {
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF004D2C) // Màu xanh đậm
+                    containerColor = Color(0xFF0A2E1F) // Màu xanh đậm
                 ),
             )
         }
@@ -195,7 +195,7 @@ fun DanhGiaSanPham(navHostController: NavHostController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF004D2C)),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF004D40)),
                 shape = RoundedCornerShape(8.dp)
             ) {
                 Text(

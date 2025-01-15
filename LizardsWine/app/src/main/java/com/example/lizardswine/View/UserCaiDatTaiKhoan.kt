@@ -1,6 +1,7 @@
 package com.example.lizardswine.View
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
@@ -29,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.lizardswine.Navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,12 +43,11 @@ fun CaiDatTaiKhoan(navHostController: NavHostController) {
                     Text(
                         text = "Cài Đặt Tài Khoản",
                         color = Color.White,
-                        fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /* Xử lý khi nhấn nút back */ }) {
+                    IconButton(onClick = { navHostController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
@@ -54,7 +56,7 @@ fun CaiDatTaiKhoan(navHostController: NavHostController) {
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF004D2C) // Màu xanh đậm
+                    containerColor = Color(0xFF0A2E1F) // Màu xanh đậm
                 )
             )
         },
@@ -74,9 +76,15 @@ fun CaiDatTaiKhoan(navHostController: NavHostController) {
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )
-                CaiDatOptionItem("Tài khoản & Bảo mật")
-                CaiDatOptionItem("Địa chỉ")
-                CaiDatOptionItem("Ví điện tử")
+                CaiDatOptionItem("Tài khoản & Bảo mật"){
+                    navHostController.navigate(Screen.TaiKhoanVaBaoMat.route)
+                }
+                CaiDatOptionItem("Địa chỉ"){
+                    navHostController.navigate(Screen.DSDiaChi.route)
+                }
+                CaiDatOptionItem("Ví điện tử"){
+                    navHostController.navigate(Screen.ViDienTu.route)
+                }
 
                 // Danh mục "Cài đặt"
                 Text(
@@ -85,17 +93,19 @@ fun CaiDatTaiKhoan(navHostController: NavHostController) {
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp)
                 )
-                CaiDatOptionItem("Ngôn ngữ")
+                CaiDatOptionItem("Ngôn ngữ"){
+
+                }
 
                 Spacer(modifier = Modifier.weight(1f))
 
                 // Nút "Đăng xuất"
                 Button(
-                    onClick = { /* Xử lý đăng xuất */ },
+                    onClick = { navHostController.navigate(Screen.DangNhap.route) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF004D2C)),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0A2E1F)),
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     Text(
@@ -110,26 +120,35 @@ fun CaiDatTaiKhoan(navHostController: NavHostController) {
     )
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CaiDatOptionItem(title: String) {
-    Row(
+fun CaiDatOptionItem(title: String, onClickCard: () -> Unit) {
+    androidx.compose.material.Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .background(Color(0xFFE8F5E9), RoundedCornerShape(8.dp))
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = title,
-            fontSize = 14.sp,
-            color = Color.Black,
-            modifier = Modifier.weight(1f)
-        )
-        Icon(
-            imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-            contentDescription = null,
-            tint = Color.Gray
-        )
+            .background(Color(0xFFE8F5E9), RoundedCornerShape(8.dp)),
+        onClick = onClickCard
+    ){
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color(0xFFE8F5E9), RoundedCornerShape(8.dp))
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = title,
+                fontSize = 14.sp,
+                color = Color.Black,
+                modifier = Modifier.weight(1f)
+            )
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                contentDescription = null,
+                tint = Color.Gray
+            )
+        }
     }
+
 }

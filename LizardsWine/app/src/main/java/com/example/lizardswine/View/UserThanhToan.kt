@@ -24,6 +24,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -50,19 +51,23 @@ fun ThanhToan(navHostController: NavHostController) {
             TopAppBar(
                 title = {
                     Text(
+                        modifier = Modifier.padding(start = 10.dp),
                         text = "Thanh toán",
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold
+                        fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White
                     )
                 },
                 navigationIcon = {
-
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back",
-                        tint = Color.White,
-                        modifier = Modifier.size(28.dp).clickable { navHostController.popBackStack() }
-                    )
+                    IconButton(
+                        onClick = {
+                            navHostController.popBackStack()
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = null,
+                            tint = Color.White
+                        )
+                    }
 
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = Color(0xFF0A2E1F))
