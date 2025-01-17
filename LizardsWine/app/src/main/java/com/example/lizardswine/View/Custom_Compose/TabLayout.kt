@@ -18,13 +18,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.lizardswine.View.ChoXacNhan
 import com.example.lizardswine.View.DS_ChoXacNhan
 import com.example.lizardswine.View.DS_DaDuyet
 import com.example.lizardswine.View.DS_DaGiao
 import com.example.lizardswine.View.DS_DaHuy
 import com.example.lizardswine.View.DS_DangGiao
+import com.example.lizardswine.View.DaGiao
+import com.example.lizardswine.View.DaXacNhan
+import com.example.lizardswine.View.DangGiao
 import com.example.lizardswine.ViewModel.HoaDonViewModel
-import com.example.lizardswine.ViewModel.LoaiRuouViewModel
 
 
 @Composable
@@ -66,6 +69,50 @@ fun TabLayout(navHostController: NavHostController, viewModel: HoaDonViewModel) 
             2 -> DS_DangGiao(navHostController, viewModel)
             3 -> DS_DaGiao(navHostController, viewModel)
             4 -> DS_DaHuy(navHostController, viewModel)
+        }
+    }
+}
+
+
+@Composable
+fun TabLayoutUser(navHostController: NavHostController) {
+    var selectedTabIndex by remember { mutableStateOf(0) }
+    val tabs = listOf("Chờ xác nhận", "Đã xác nhận", "Đang giao", "Đã giao")
+
+    Column {
+        ScrollableTabRow(
+            backgroundColor = Color(0xFF009688),
+            selectedTabIndex = selectedTabIndex,
+            edgePadding = 5.dp,
+            indicator = { tabPositions ->
+                TabRowDefaults.Indicator(
+                    Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
+                    color = Color(0xFF0A2E1F)
+                )
+            }
+        ) {
+            tabs.forEachIndexed { index, title ->
+                Tab(
+                    selected = selectedTabIndex == index,
+                    onClick = { selectedTabIndex = index },
+                    text = {
+                        Text(
+                            title,
+                            color = if (selectedTabIndex == index) Color(0xFF0A2E1F) else Color.White,
+                            style = MaterialTheme.typography.body2,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                )
+            }
+        }
+
+        when (selectedTabIndex) {
+            0 -> ChoXacNhan(navHostController)
+            1 -> DaXacNhan(navHostController)
+            2 -> DangGiao(navHostController)
+            3 -> DaGiao(navHostController)
         }
     }
 }

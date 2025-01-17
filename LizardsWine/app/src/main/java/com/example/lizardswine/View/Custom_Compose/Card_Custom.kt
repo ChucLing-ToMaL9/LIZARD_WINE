@@ -7,7 +7,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -17,6 +16,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -28,8 +29,15 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,10 +52,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
 import com.example.lizardswine.Model.ChiTietHoaDon
 import com.example.lizardswine.Model.HoaDon
 import com.example.lizardswine.Model.Ruou
-import com.example.lizardswine.Navigation.NavItem
 import com.example.lizardswine.Navigation.Screen
 import com.example.lizardswine.R
 import com.example.lizardswine.View.NgoiSao
@@ -63,6 +71,8 @@ fun CardHoaDon(navHostController: NavHostController, hoadon: HoaDon, manhinh: In
     //4 -> đã giao
     //5 -> đã hủy
     val updateResultState = viewModel.updateResult.collectAsState()
+
+    val formatter = DecimalFormat("#,###")
 
     Card(
         modifier = Modifier.fillMaxSize().padding(10.dp),
@@ -80,7 +90,7 @@ fun CardHoaDon(navHostController: NavHostController, hoadon: HoaDon, manhinh: In
 
             Text(
                 modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
-                text = "Tổng số tiền (" + hoadon.SoLuongRuou + " sản phẩm): " + hoadon.TongThanhToan.toString() + " VNĐ",
+                text = "Tổng số tiền (" + hoadon.SoLuongRuou + " sản phẩm): " + hoadon.TongThanhToan.let { formatter.format(it.toDouble()) }  + " VNĐ",
                 style = TextStyle(
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
@@ -154,6 +164,9 @@ fun CardHoaDon(navHostController: NavHostController, hoadon: HoaDon, manhinh: In
 
 @Composable
 fun CardThongTinRuou(ruou: ChiTietHoaDon) {
+
+    val formatter = DecimalFormat("#,###")
+
     Row (
         modifier = Modifier.fillMaxWidth().height(100.dp)
     ){
@@ -182,14 +195,14 @@ fun CardThongTinRuou(ruou: ChiTietHoaDon) {
             Column {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = "x " + ruou.SoLuoong.toString(),
+                    text = "x " + ruou.SoLuong.toString(),
                     style = TextStyle(fontSize = 14.sp, color = Color.Gray),
                     textAlign = TextAlign.Right
                 )
 
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = ruou.DonGia.toString() + " VNĐ",
+                    text = "${ruou.GiaBan.let { formatter.format(it.toDouble()) } } VNĐ" ?: "N/A",
                     style = TextStyle(
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold,
@@ -221,7 +234,6 @@ fun CardDiaChi(hoadon: Result<HoaDon>?, onClickDiaChi: () -> Unit){
                 Text(text = "${hoaDonData?.DCGiaoHang}")
             }
         }
-
     }
 }
 
@@ -249,6 +261,8 @@ fun CardPTThanhToan(hoadon: Result<HoaDon>?){
 
 @Composable
 fun CardChiTietThanhToan(hoadon: Result<HoaDon>?){
+
+    val formatter = DecimalFormat("#,###")
     val hoaDonData = hoadon?.getOrNull()
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -261,7 +275,7 @@ fun CardChiTietThanhToan(hoadon: Result<HoaDon>?){
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(text = "Tổng tiền hàng", color = Color(0xFF0A2E1F))
-                Text(text = "${hoaDonData?.TongTien}", color = Color(0xFF0A2E1F))
+                Text(text = hoaDonData?.TongTien?.let { formatter.format(it.toDouble()) }?: "N/A", color = Color(0xFF0A2E1F))
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -283,7 +297,7 @@ fun CardChiTietThanhToan(hoadon: Result<HoaDon>?){
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(text = "Tổng tiền sản phẩm", fontWeight = FontWeight.Bold, color = Color(0xFF0A2E1F))
-                Text(text = hoaDonData?.TongThanhToan.toString(), fontWeight = FontWeight.Bold, color = Color(0xFF0A2E1F))
+                Text(text = hoaDonData?.TongThanhToan?.let { formatter.format(it.toDouble()) }?: "N/A", fontWeight = FontWeight.Bold, color = Color(0xFF0A2E1F))
             }
         }
     }
@@ -293,34 +307,37 @@ fun CardChiTietThanhToan(hoadon: Result<HoaDon>?){
 @Composable
 fun CardRuou(ruou: Ruou, onClickRuou: () -> Unit) {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val formatter = DecimalFormat("#,###")
     val formattedGiaBan = ruou.GiaBan?.let { formatter.format(it.toDouble()) } ?: "N/A"
 
     Card (
-        modifier = Modifier.padding(8.dp).clickable {onClickRuou()}, elevation = 2.dp
+        modifier = Modifier.padding(8.dp).size(screenHeight * 7 / 20).clickable {onClickRuou()}, elevation = 2.dp
     ) {
         Column (
             modifier = Modifier.background(Color(0xFFE8F5E9)),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceEvenly
         ) {
+
             Image(
-                painter = painterResource(id = R.drawable.anhchairuou),
-                contentDescription = "Wine Bottle",
+                painter = rememberAsyncImagePainter(ruou.AnhRuou[0].AnhRuou),
+                contentDescription = null,
                 modifier = Modifier
                     .size(screenWidth * 9 / 20)
                     .padding(15.dp),
-                contentScale = ContentScale.Fit
+                contentScale = ContentScale.Crop
             )
             Text(
+                modifier = Modifier.padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
                 text = ruou.TenRuou ?: "Không tên",
                 fontSize = 14.sp,
                 color = Color.Black,
                 maxLines = 2,
                 textAlign = TextAlign.Center
             )
-
+            Spacer(modifier = Modifier.height(6.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Spacer(modifier = Modifier.height(6.dp))
                 Text(
                     text = "$formattedGiaBan VND",
                     fontSize = 14.sp,
@@ -328,7 +345,7 @@ fun CardRuou(ruou: Ruou, onClickRuou: () -> Unit) {
                 )
                 Spacer(modifier = Modifier.padding(18.dp))
                 Text(
-                    text = "5",
+                    text = "${ruou.DiemDG}",
                     fontSize = 12.sp,
                     color = Color(0xFF004D40)
                 )
@@ -372,22 +389,20 @@ fun CardXemThem(tieude: String, onClickText: () -> Unit){
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun CardDSRuouTheoDanhMuc(dsRuouTheoDM: List<Ruou>, navHostController: NavHostController){
-    FlowRow(
-        modifier = Modifier.padding() .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalArrangement = Arrangement.Center,
-        maxItemsInEachRow = 2
-    ){
-        for (i in 1..6) {
-            if (i - 1 < dsRuouTheoDM.size) {
-                val ruou = dsRuouTheoDM[i - 1]
-                CardRuou(ruou){
-                    navHostController.navigate(Screen.ChiTietRuou.route)
+fun CardDSRuouTheoDanhMuc(dsRuouTheoDM: State<List<Ruou>>, navHostController: NavHostController){//
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2), // Hiển thị 2 cột
+            modifier = Modifier.height(700.dp)
+        ) {
+            items(dsRuouTheoDM.value.size) { index ->
+                val ruou = dsRuouTheoDM.value[index]
+                CardRuou(ruou) {
+                    navHostController.navigate(Screen.ChiTietRuou.route  + "?MaR=${ruou.MaR}")
                 }
             }
         }
-    }
+
 }
 
 @Composable
@@ -465,5 +480,39 @@ fun CardDiaChiNguoiDung(){
             }
         }
 
+    }
+}
+
+
+@Composable
+fun DSDiaChiNguoiDung(){
+    val diaChi = listOf("Địa chỉ 1", "Địa chỉ 2", "Địa chỉ 3")
+    var chonDiaChi by remember { mutableStateOf("") }
+
+    diaChi.forEach { diaChi ->
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+        ) {
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                backgroundColor = Color(0xFFE8F5E9),
+                shape = RoundedCornerShape(8.dp),
+            ) {
+                Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically){
+                    RadioButton(
+                        selected = (diaChi == chonDiaChi),
+                        onClick = { chonDiaChi = diaChi },
+                        colors = RadioButtonDefaults.colors(
+                            selectedColor = Color(0xFF003D24),
+                            unselectedColor = Color.Gray
+                        )
+                    )
+                    Spacer(modifier = Modifier.width(1.dp))
+                    CardDiaChiNguoiDung()
+                }
+            }
+        }
     }
 }

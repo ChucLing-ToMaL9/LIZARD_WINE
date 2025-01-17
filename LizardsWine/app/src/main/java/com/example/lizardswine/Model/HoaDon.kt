@@ -23,8 +23,8 @@ data class ChiTietHoaDon(
     val MaR: Int,
     val DS_AnhRuou: List<DS_AnhRuou>,
     val TenRuou: String,
-    val SoLuoong: Int,// SoLuong: Int
-    val DonGia: Int,
+    val SoLuong: Int,// SoLuong: Int
+    val GiaBan: Int,
     val ThanhTien: Int
 )
 

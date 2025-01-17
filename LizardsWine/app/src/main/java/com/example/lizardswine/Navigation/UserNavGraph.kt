@@ -4,8 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.lizardswine.View.CaiDatTaiKhoan
 import com.example.lizardswine.View.CapNhatDiaChi
+import com.example.lizardswine.View.ChiTietDonHang
 import com.example.lizardswine.View.ChiTietSanPham
 import com.example.lizardswine.View.DSDiaChi
 import com.example.lizardswine.View.DangKy
@@ -22,9 +24,9 @@ import com.example.lizardswine.View.SuaSoDienThoai
 import com.example.lizardswine.View.SuaTen
 import com.example.lizardswine.View.TaiKhoanBaoMat
 import com.example.lizardswine.View.ThanhToan
-import com.example.lizardswine.View.TrangChu
 import com.example.lizardswine.View.WelcomeToLizardWine
 import com.example.lizardswine.View.XemChiTietDanhMucSP
+import com.example.lizardswine.ViewModel.RuouViewModel
 
 
 //Navigation User Screen
@@ -72,11 +74,26 @@ fun UserNavGraph(navHostController: NavHostController){
         composable(Screen.GioHang.route){
             GioHang(navHostController)
         }
-        composable(Screen.ChiTietRuou.route){
-            ChiTietSanPham(navHostController)
+        composable(Screen.ChiTietRuou.route + "?MaR={MaR}",
+            arguments = listOf(
+                navArgument("MaR"){nullable = true}
+            )
+            ){
+            var MaR = it.arguments?.getString("MaR")
+            if(MaR != null)
+            ChiTietSanPham(navHostController, MaR.toInt())
         }
-        composable(Screen.DSRuouTheoDanhMuc.route){
-            XemChiTietDanhMucSP(navHostController)
+        composable(
+            Screen.DSRuouTheoDanhMuc.route + "?MaLoaiR={MaLoaiR}&OtherParam={TenDanhMuc}",
+            arguments = listOf(
+                navArgument("MaLoaiR"){nullable = true},
+                navArgument("TenDanhMuc") { nullable = true }
+            )
+        ) {
+            var MaLoaiR = it.arguments?.getString("MaLoaiR")
+            var TenDanhMuc = it.arguments?.getString("TenDanhMuc")
+            if(MaLoaiR != null)
+                XemChiTietDanhMucSP(navHostController, MaLoaiR.toInt(), TenDanhMuc.toString())
         }
         composable(Screen.ThanhToan.route){
             ThanhToan(navHostController)

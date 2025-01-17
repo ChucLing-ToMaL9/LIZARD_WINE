@@ -104,7 +104,7 @@ fun CaiDatTaiKhoan(navHostController: NavHostController) {
                     onClick = { navHostController.navigate(Screen.DangNhap.route) },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(16.dp).height(45.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0A2E1F)),
                     shape = RoundedCornerShape(8.dp)
                 ) {

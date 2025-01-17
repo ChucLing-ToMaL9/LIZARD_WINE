@@ -25,6 +25,7 @@ import com.example.lizardswine.View.LichSuMuaHang
 import com.example.lizardswine.View.ThongBao
 import com.example.lizardswine.View.ThongTinNguoiDung
 import com.example.lizardswine.View.TrangChu
+import com.example.lizardswine.ViewModel.RuouViewModel
 
 //Navigation
 sealed class NavBarItem(val route: String, var icon: Int, var lable: String){

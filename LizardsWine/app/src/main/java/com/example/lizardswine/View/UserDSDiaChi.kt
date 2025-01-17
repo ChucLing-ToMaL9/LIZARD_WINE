@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.lizardswine.Navigation.Screen
+import com.example.lizardswine.View.Custom_Compose.DSDiaChiNguoiDung
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -71,7 +72,7 @@ fun DSDiaChi(navHostController: NavHostController) {
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CardDiaChiNguoiDung()
+            DSDiaChiNguoiDung()
 
             Spacer(modifier = Modifier.weight(1f)) // Đẩy nút xuống cuối màn hình
 
@@ -83,7 +84,7 @@ fun DSDiaChi(navHostController: NavHostController) {
                     .fillMaxWidth()
                     .height(48.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF003D24), // Màu xanh đậm
+                    containerColor = Color(0xFF188158), // Màu xanh đậm
                     contentColor = Color.White // Màu chữ trắng
                 ),
                 shape = RoundedCornerShape(8.dp) // Bo góc

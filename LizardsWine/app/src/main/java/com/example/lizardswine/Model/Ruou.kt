@@ -1,22 +1,21 @@
 package com.example.lizardswine.Model
 
-data class Anh(val MaHA: String, val LinkAnh: String)
+data class Anh(val MaHA: Int, val AnhRuou: String)
 
 data class Ruou(
-    val MaR: String,
-    val MaLoaiR: String,
-    val TenLoaiRuou: String,
-    val MaHA: String,
-    val AnhRuou: List<Anh>?,
+    val MaR: Int,
+    val MaLoaiR: Int,
+    val AnhRuou: List<Anh>,
     val TenRuou: String,
     val XuatXu: String,
-    val NongDoCon: String,
-    val DungTich: String,
-    val NamSanXuat: String,
+    val NongDoCon: Int,
+    val DungTich: Int,
+    val NamSanXuat: Int,
     val ThanhPhan: String,
     val HuongVi: String,
-    val GiaBan: String,
-    val SoLuongTon: String,
+    val GiaBan: Int,
+    val SoLuongTon: Int,
+    val DiemDG: Int,
     val MoTa: String,
-    val TrangThai: String
+    val TrangThai: Int
 )

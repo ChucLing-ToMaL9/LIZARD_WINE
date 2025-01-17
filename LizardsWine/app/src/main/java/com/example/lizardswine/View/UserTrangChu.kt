@@ -1,6 +1,5 @@
 package com.example.lizardswine.View
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -12,14 +11,18 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.DrawerDefaults
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -34,6 +37,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,23 +56,20 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.lizardswine.Api.RuouApi
 import com.example.lizardswine.Model.Ruou
 import com.example.lizardswine.Navigation.NavAppBar
-import com.example.lizardswine.Navigation.NavBarItem
 import com.example.lizardswine.Navigation.NavGraphBar
 import com.example.lizardswine.Navigation.Screen
-import com.example.lizardswine.Navigation.UserNavGraph
 import com.example.lizardswine.R
-import com.example.lizardswine.View.Custom_Compose.BottomNavigationBar
 import com.example.lizardswine.View.Custom_Compose.CardDSRuouTheoDanhMuc
+import com.example.lizardswine.View.Custom_Compose.CardRuou
 import com.example.lizardswine.View.Custom_Compose.CardXemThem
 import kotlinx.coroutines.launch
 import com.example.lizardswine.View.Custom_Compose.DanhMucRuou
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.example.lizardswine.ViewModel.RuouViewModel
 
 @Composable
 fun ManHinhChinh(navHostController: NavHostController){
@@ -92,76 +93,17 @@ fun ManHinhChinh(navHostController: NavHostController){
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
-fun TrangChu(navHostController: NavHostController) {
-//    val api = remember {
-//        Retrofit.Builder()
-//            .baseUrl("https://93be-113-172-123-201.ngrok-free.app/lizardwine_api/api/Ruou/") // Địa chỉ IP local server
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//            .create(RuouApi::class.java)
-//    }
-//
-//    var ruouList by remember { mutableStateOf<List<Ruou>>(emptyList()) }
-//    var isLoading by remember { mutableStateOf(true) }
-
+fun TrangChu(navHostController: NavHostController, viewModel: RuouViewModel = viewModel()) {
     val scope = rememberCoroutineScope()
-    // Gọi API để lấy danh sách rượu
-//    LaunchedEffect(Unit) {
-//        scope.launch {
-//            try {
-//                val response = api.getRuouList(maR = 1)
-//                ruouList = response.ds_ruou
-//                Log.d("WineApp", "Dữ liệu nhận được: ${ruouList}")
-//            } catch (e: Exception) {
-//                ruouList = emptyList()
-//                Log.e("WineApp", "Lỗi khi gọi API", e)
-//            } finally {
-//                isLoading = false
-//            }
-//        }
-//    }
 
-    val dsRuou = listOf(
-        Ruou("1","1","ABC","1", emptyList(), "ABC",
-            "VN", "750", "570", "1980", "con", "cay"
-        ,"12000000", "21", "ngon", "1"),
-        Ruou("1","1","ABC","1", emptyList(), "ABC",
-            "VN", "750", "570", "1980", "con", "cay"
-            ,"12000000", "21", "ngon", "1"),
-        Ruou("1","1","ABC","1", emptyList(), "ABC",
-            "VN", "750", "570", "1980", "con", "cay"
-            ,"12000000", "21", "ngon", "1"),
-        Ruou("1","1","ABC","1", emptyList(), "ABC",
-            "VN", "750", "570", "1980", "con", "cay"
-            ,"12000000", "21", "ngon", "1"),
-        Ruou("1","1","ABC","1", emptyList(), "ABC",
-            "VN", "750", "570", "1980", "con", "cay"
-            ,"12000000", "21", "ngon", "1"),
-        Ruou("1","1","ABC","1", emptyList(), "ABC",
-            "VN", "750", "570", "1980", "con", "cay"
-            ,"12000000", "21", "ngon", "1"),
-        Ruou("1","1","ABC","1", emptyList(), "ABC",
-            "VN", "750", "570", "1980", "con", "cay"
-            ,"12000000", "21", "ngon", "1"),
-        Ruou("1","1","ABC","1", emptyList(), "ABC",
-            "VN", "750", "570", "1980", "con", "cay"
-            ,"12000000", "21", "ngon", "1"),
-        Ruou("1","1","ABC","1", emptyList(), "ABC",
-            "VN", "750", "570", "1980", "con", "cay"
-            ,"12000000", "21", "ngon", "1"),
-        Ruou("1","1","ABC","1", emptyList(), "ABC",
-            "VN", "750", "570", "1980", "con", "cay"
-            ,"12000000", "21", "ngon", "1"),
-        Ruou("1","1","ABC","1", emptyList(), "ABC",
-            "VN", "750", "570", "1980", "con", "cay"
-            ,"12000000", "21", "ngon", "1"),
-        Ruou("1","1","ABC","1", emptyList(), "ABC",
-            "VN", "750", "570", "1980", "con", "cay"
-            ,"12000000", "21", "ngon", "1"),
-        Ruou("1","1","ABC","1", emptyList(), "ABC",
-            "VN", "750", "570", "1980", "con", "cay"
-            ,"12000000", "21", "ngon", "1")
-    )
+
+
+    LaunchedEffect(Unit) {
+        viewModel.layDSRuouTheoMaLoaiR(9)
+    }
+
+    val dsRuouTheoMa9 = viewModel.ruouTheoMaList.collectAsState(initial = emptyList())  // Mã 9
+
     val navdrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val configuration = LocalConfiguration.current;
     val screenWidth = configuration.screenWidthDp.dp//Tính kích thước màn hình
@@ -181,10 +123,11 @@ fun TrangChu(navHostController: NavHostController) {
                     Text(text = "DANH MỤC", modifier = Modifier.padding(25.dp), style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White ))
                 }
                 HorizontalDivider()
-                DanhMucRuou(navHostController)
+                DanhMucRuou(navHostController, viewModel)
             }
         }
     ){
+
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -270,10 +213,9 @@ fun TrangChu(navHostController: NavHostController) {
                 )
             }
         ) { paddingValues ->
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(1), // Hiển thị cột
+                modifier = Modifier.fillMaxSize().padding(paddingValues)
             ) {
                 item {
                     Image(
@@ -281,26 +223,20 @@ fun TrangChu(navHostController: NavHostController) {
                         contentDescription = "Banner",
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(200.dp),
+                            .height(100.dp),
                         contentScale = ContentScale.Crop
                     )
                 }
+
                 item {
-                    CardXemThem("GỢI Ý HÔM NAY") {
-                        navHostController.navigate(Screen.DSRuouTheoDanhMuc.route)
-                    }
+                CardXemThem("RƯỢU VODKA"){
+                    navHostController.navigate(Screen.DSRuouTheoDanhMuc.route + "?MaLoaiR=${9}&OtherParam=${"Rượu Vodka"}")
                 }
-                item{
-                    CardDSRuouTheoDanhMuc(dsRuou, navHostController)
                 }
                 item {
-                    CardXemThem("RƯỢU VANG"){
-                        navHostController.navigate(Screen.DSRuouTheoDanhMuc.route)
-                    }
+                CardDSRuouTheoDanhMuc(dsRuouTheoMa9,navHostController)
                 }
-                item{
-                    CardDSRuouTheoDanhMuc(dsRuou, navHostController)
-                }
+
             }
         }
     }

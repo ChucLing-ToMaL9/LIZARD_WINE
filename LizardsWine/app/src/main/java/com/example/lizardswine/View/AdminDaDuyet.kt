@@ -26,7 +26,7 @@ fun DS_DaDuyet(navHostController: NavHostController, viewModel: HoaDonViewModel 
 
 
     LaunchedEffect(Unit) {
-        viewModel.layDSHoaDonTheoTrangThai(1)
+        viewModel.layDSHoaDonTheoTrangThai(2)
     }
 
     Box(modifier = Modifier.fillMaxSize()) {

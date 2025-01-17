@@ -30,7 +30,7 @@ fun DS_DaGiao(navHostController: NavHostController, viewModel: HoaDonViewModel =
     val message = viewModel.message.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.layDSHoaDonTheoTrangThai(3)
+        viewModel.layDSHoaDonTheoTrangThai(4)
     }
 
     Box(modifier = Modifier.fillMaxSize()) {

@@ -29,7 +29,7 @@ fun DS_DaHuy(navHostController: NavHostController, viewModel: HoaDonViewModel = 
     val isLoading = viewModel.isLoading.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.layDSHoaDonTheoTrangThai(4)
+        viewModel.layDSHoaDonTheoTrangThai(5)
     }
 
     Box(modifier = Modifier.fillMaxSize()) {

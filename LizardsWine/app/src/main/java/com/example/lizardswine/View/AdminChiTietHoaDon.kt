@@ -49,6 +49,7 @@ import com.example.lizardswine.View.Custom_Compose.CardHoaDon
 import com.example.lizardswine.View.Custom_Compose.CardPTThanhToan
 import com.example.lizardswine.View.Custom_Compose.CardThongTinRuou
 import com.example.lizardswine.ViewModel.HoaDonViewModel
+import java.text.DecimalFormat
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -104,6 +105,9 @@ fun ChiTiet(viewModel: HoaDonViewModel = remember { HoaDonViewModel() }, maHD: I
     val message = viewModel.message.collectAsState()
     val hoaDonData = hoadon?.getOrNull()
 
+    val formatter = DecimalFormat("#,###")
+
+
     LaunchedEffect(Unit) {
         viewModel.layChiTietHoaDonTheoMaHD(maHD)
     }
@@ -150,7 +154,7 @@ fun ChiTiet(viewModel: HoaDonViewModel = remember { HoaDonViewModel() }, maHD: I
                                 Row (modifier = Modifier.fillMaxWidth().padding(10.dp), Arrangement.End)
                                 {
                                     Text(
-                                        text = "Thành tiền: ${hoaDonData?.TongTien}đ",
+                                        text = "Thành tiền: ${hoaDonData?.TongTien?.let { formatter.format(it.toDouble()) }?: "N/A"}đ",
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 16.sp,
                                         color = Color.Black

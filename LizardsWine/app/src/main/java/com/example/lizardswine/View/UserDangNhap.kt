@@ -53,9 +53,7 @@ import java.util.regex.Pattern
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DangNhap(navHostController: NavHostController) {
-    val dsTaiKhoan = listOf<DangNhap>(
-        DangNhap("haitruong1802", "123")
-    )
+
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }

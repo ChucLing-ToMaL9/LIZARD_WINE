@@ -16,7 +16,7 @@ import retrofit2.http.Query
 
 object Constant{
     //const val BASE_URL = "http://192.168.1.6/lizardwine_api/api/ds_loai_ruou.php"
-    const val BASE_URL = "https://b9bc-2402-800-6394-81a4-6c59-870f-431e-8f6.ngrok-free.app/lizardwine_api/api/"
+    const val BASE_URL = "https://047e-113-172-123-201.ngrok-free.app/lizardwine_api/api/"
 }
 
 object HoaDonRetrofitClient{
